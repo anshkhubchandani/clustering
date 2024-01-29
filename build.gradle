@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'de.unijena.bioinf.dm23.grp06'
@@ -7,12 +8,60 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+
+    maven { // übernommen von alignments
+        url 'https://git.uni-jena.de/api/v4/projects/3621/packages/maven'
+        name = "FSU-Gitlab"
+        credentials(PasswordCredentials) {
+            username = project.findProperty("dm.registry.tokenName") as String
+            password = project.findProperty("dm.registry.token") as String
+            // the variable resides in $GRADLE_USER_HOME/gradle.properties
+        }
+        authentication {
+            basic(BasicAuthentication)
+        }
+    }
+
+    maven { // übernommen von alignments
+        url 'https://git.uni-jena.de/api/v4/projects/3750/packages/maven'
+        name = "FSU-Gitlab"
+        credentials(PasswordCredentials) {
+            username = project.findProperty("dm.registry.tokenName") as String
+            password = project.findProperty("dm.registry.token") as String
+            // the variable resides in $GRADLE_USER_HOME/gradle.properties
+        }
+        authentication {
+            basic(BasicAuthentication)
+        }
+    }
 }
 
 dependencies {
+    implementation (group: 'de.unijena.bioinf.dm23.grp06', name: 'alignments', version: '1.0-SNAPSHOT'){
+        changing = true;
+    } // neu eingefügt
+    implementation (group: 'de.unijena.bioinf.dm23.grp06', name: 'exact-search', version: '1.0-SNAPSHOT'){
+        changing = true;
+    } // übernommen von alignments
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
+
+apply plugin: 'application'
+application {
+    mainClassName = 'de.unijena.bioinf.dm23.grp06.clustering.Main'
+    applicationDefaultJvmArgs = ["-Xmx2G"]
+}
+
+/*dependencies {
+
+    implementation (group: 'de.unijena.bioinf.dm23.grp06', name: 'alignments', version: '1.0-SNAPSHOT'){
+        changing = true;
+    } // neu eingefügt
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}*/
 
 test {
     useJUnitPlatform()
