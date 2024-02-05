@@ -22,7 +22,7 @@ repositories {
         }
     }
 
-    maven { // übernommen von alignments
+    maven { // Übernommen von alignments
         url 'https://git.uni-jena.de/api/v4/projects/3750/packages/maven'
         name = "FSU-Gitlab"
         credentials(PasswordCredentials) {
