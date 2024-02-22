@@ -43,6 +43,7 @@ dependencies {
     implementation (group: 'de.unijena.bioinf.dm23.grp06', name: 'exact-search', version: '1.0-SNAPSHOT'){
         changing = true;
     } // übernommen von alignments
+    implementation 'info.picocli:picocli:4.7.5'
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
