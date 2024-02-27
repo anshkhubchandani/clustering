@@ -13,8 +13,18 @@ public class ClusteringOptions implements Runnable{
     Input userInput;
 
     static class Input {
-        @CommandLine.Option(names = {"-s", "--seq"}, description = "Input sequences to be used (2 or more sequences or file paths).")
-        ArrayList<String> inputSeq;
+
+        @CommandLine.ArgGroup(heading = "Input sequence")
+        InputSequence userInputSequence;
+
+        static class InputSequence {
+
+            @CommandLine.Option(names = {"-s", "--seq"}, description = "Input sequences to be used (2 or more sequences or file paths).")
+            ArrayList<String> inputSeq;
+
+            @CommandLine.Option(names = {"-t", "--type"}, description = "Sequence type of input sequences (DNA, RNA, amino acid AA, or ASCII).")
+            String sequenceType;
+        }
 
         @CommandLine.Option(names = {"-m", "--matrix"}, description = "File path of a distance matrix as an input to create a phylogenic tree.")
         String distanceMatrixPath;
