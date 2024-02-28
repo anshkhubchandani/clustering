@@ -1,11 +1,13 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DistanceMatrix {
 
     private HashMap<TaxonPair, Integer> distances;
+
     private TaxonPair minDistancePair;
 
     public DistanceMatrix() {
@@ -14,6 +16,10 @@ public class DistanceMatrix {
 
     protected int getMinimumDistance () {
         return distances.get(minDistancePair);
+    }
+
+    protected TaxonPair getMinDistancePair () {
+        return minDistancePair;
     }
 
     protected int getDistance (String taxon1, String taxon2) {

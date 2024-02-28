@@ -5,4 +5,5 @@ import de.unijena.bioinf.dm23.grp06.model.Node;
 public interface Clustering {
 
     Node nextCluster();
+
 }
