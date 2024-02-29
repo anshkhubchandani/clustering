@@ -27,7 +27,7 @@ public class DistanceMatrix {
             distances.put(tempTaxon, distance);
 
             if (isNewMinimum(distance)) {
-                this.minDistancePair = tempTaxon; // TODO !!
+                this.minDistancePair = tempTaxon;
             }
         }
         else {
