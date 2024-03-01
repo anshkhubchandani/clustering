@@ -10,15 +10,26 @@ public class UPGMA extends PairGroupMethods {
         super(distMatrix);
     }
 
-    protected void calculateNewDistances() {
+    @Override
+    protected void calculateNewDistances(String firstNode, String secondNode, String newClusterNode) {
+
+        double newDistance;
+
+        for (String nodeInMatrix : (this.distanceMatrix.getNodesInMatrix())) {
+
+            newDistance = ((firstNode.length() * this.distanceMatrix.getDistance(firstNode, nodeInMatrix)) +
+                    (secondNode.length() * this.distanceMatrix.getDistance(secondNode, nodeInMatrix))) /
+                    (firstNode.length() + secondNode.length());
+            this.distanceMatrix.addDistance(nodeInMatrix, newClusterNode, newDistance);
+
+        }
 
     }
 
     @Override
     public Node nextCluster() {
-        Node nextCluster = calculateNextCluster();
-        calculateNewDistances();
-        return nextCluster;
+
+        return null;
     }
 
 }

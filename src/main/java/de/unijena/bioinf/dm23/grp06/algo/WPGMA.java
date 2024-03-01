@@ -8,7 +8,17 @@ public class WPGMA extends PairGroupMethods {
         super(distMatrix);
     }
 
-    protected void calculateNewDistances() {
+    @Override
+    protected void calculateNewDistances(String firstNode, String secondNode, String newClusterNode) {
+
+        double newDistance;
+
+        for (String nodeInMatrix : (this.distanceMatrix.getNodesInMatrix())) {
+
+            newDistance = (this.distanceMatrix.getDistance(firstNode, nodeInMatrix) + this.distanceMatrix.getDistance(secondNode, nodeInMatrix)) / 2;
+            this.distanceMatrix.addDistance(nodeInMatrix, newClusterNode, newDistance);
+
+        }
 
     }
 
