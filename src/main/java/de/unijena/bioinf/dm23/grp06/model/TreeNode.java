@@ -25,13 +25,13 @@ public class TreeNode {
         this.depth = 0;
     }
 
-    protected void setFirstConnectedNode (TreeNode firstNode) {
+    public void setFirstConnectedNode (TreeNode firstNode) {
         this.firstConnectedNode = firstNode;
     }
-    protected void setSecondConnectedNode (TreeNode secondNode) {
+    public void setSecondConnectedNode (TreeNode secondNode) {
         this.secondConnectedNode = secondNode;
     }
-    protected void setThirdConnectedNode (TreeNode thirdNode) {
+    public void setThirdConnectedNode (TreeNode thirdNode) {
         this.thirdConnectedNode = thirdNode;
     }
 }
