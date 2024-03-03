@@ -1,8 +1,6 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
-import de.unijena.bioinf.dm23.grp06.model.Node;
-
-import java.util.ArrayList;
+import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 
 public class UPGMA extends PairGroupMethods {
 
@@ -27,7 +25,7 @@ public class UPGMA extends PairGroupMethods {
     }
 
     @Override
-    public Node nextCluster() {
+    public TreeNode nextCluster() {
 
         return null;
     }

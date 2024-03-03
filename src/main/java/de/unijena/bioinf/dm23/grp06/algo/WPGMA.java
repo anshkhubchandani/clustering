@@ -1,6 +1,6 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
-import de.unijena.bioinf.dm23.grp06.model.Node;
+import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 
 public class WPGMA extends PairGroupMethods {
 
@@ -23,7 +23,7 @@ public class WPGMA extends PairGroupMethods {
     }
 
     @Override
-    public Node nextCluster() {
+    public TreeNode nextCluster() {
 
 
 

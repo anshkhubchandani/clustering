@@ -1,6 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
-import de.unijena.bioinf.dm23.grp06.model.Node;
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 
 public abstract class PairGroupMethods implements Clustering {
@@ -11,7 +10,7 @@ public abstract class PairGroupMethods implements Clustering {
         this.distanceMatrix = distMatrix;
     }
 
-    protected Node calculateNextCluster () {
+    protected TreeNode calculateNextCluster () {
 
 
 

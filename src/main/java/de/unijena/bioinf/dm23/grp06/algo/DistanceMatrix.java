@@ -1,34 +1,23 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DistanceMatrix {
 
-    private HashMap<TaxonPair, Double> distances;
-
-    private TaxonPair minDistancePair;
+    private final HashMap<NodePair, Double> distances;
+    private ArrayList<String> nodesInMatrix;
+    private NodePair minDistancePair;
 
     public DistanceMatrix() {
         distances = new HashMap<>();
     }
 
-    protected TaxonPair getMinimumDistancePair() {
-        return minDistancePair;
-    }
-
-    protected double getDistance (String taxon1, String taxon2) {
-        return distances.get(new TaxonPair(taxon1, taxon2));
-    }
-
     protected void addDistance (String taxon1, String taxon2, double distance) {
-        TaxonPair tempTaxon = new TaxonPair(taxon1, taxon2);
+        NodePair tempTaxon = new NodePair(taxon1, taxon2);
         if (!distances.containsKey(tempTaxon)) {
             distances.put(tempTaxon, distance);
-
-            if (isNewMinimum(distance)) {
-                this.minDistancePair = tempTaxon;
-            }
         }
         else {
             System.err.println("Couldn't add new distance to distance matrix.");
@@ -37,9 +26,9 @@ public class DistanceMatrix {
 
     protected void deleteDistances (String taxon1, String taxon2) {
 
-        TaxonPair[] keyArray = distances.keySet().toArray(new TaxonPair[0]);
+        NodePair[] keyArray = distances.keySet().toArray(new NodePair[0]);
 
-        for (TaxonPair tp : keyArray) {
+        for (NodePair tp : keyArray) {
             if (tp.containsTaxon(taxon1)) {
                 distances.remove(tp);
             }
@@ -47,23 +36,32 @@ public class DistanceMatrix {
                 distances.remove(tp);
             }
         }
+
+        findNewMinimum();
+    }
+    
+    protected double getDistance (String taxon1, String taxon2) {
+        return this.distances.get(new NodePair(taxon1, taxon2));
+    }
+
+    protected NodePair getMinimumDistancePair() {
+        return this.minDistancePair;
+    }
+    
+    protected ArrayList<String> getNodesInMatrix () {
+        return this.nodesInMatrix;
     }
 
     protected void findNewMinimum () {
-        TaxonPair[] keyArray = distances.keySet().toArray(new TaxonPair[0]);
+        NodePair[] allKeys = distances.keySet().toArray(new NodePair[0]);
         double tempMinDistance = Double.MAX_VALUE;
 
-        for (TaxonPair tp : keyArray) {
-            if (distances.get(tp) < tempMinDistance) {
-                tempMinDistance = distances.get(tp);
-                this.minDistancePair = tp;
+        for (NodePair np : allKeys) {
+            if (distances.get(np) < tempMinDistance) {
+                tempMinDistance = distances.get(np);
+                this.minDistancePair = np;
             }
         }
     }
 
-    private boolean isNewMinimum (double newDistance) {
-        return (this.minDistancePair == null || newDistance < distances.get(minDistancePair));
-    }
-
-    // importDistanceMatrix mit DistanzmatrixReader !!
 }
