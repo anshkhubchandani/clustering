@@ -43,7 +43,60 @@ public class DistanceMatrix {
     protected double getDistance (String taxon1, String taxon2) {
         return this.distances.get(new NodePair(taxon1, taxon2));
     }
-    protected String getMetric () {} //hier Eig prüfen
+
+
+    //TODO Teammate
+    protected String checkMetric () {
+        //Symmetrie
+        if (!isSymmetric()){
+            return "Distance matrix is not symmetric.";
+        }
+        //Positive Definitheit
+        if(!isPositiveDefinite()){
+            return "Distance matrix is not positive definite.";
+        }
+        //Dreiecksungleichung
+        if(!satisfiesTriangleInequality()){
+            return "Distance matrix does not satisfy the triangle inequality.";
+        }
+        return "Distance matrix satisfies all metric properties.";
+    }
+    private boolean isSymmetric(){
+        for (NodePair np : distances.keySet()) {
+            // NodePair reversePair = new NodePair(np.getTaxon2(), np.getTaxon1());
+            NodePair reversePair = new NodePair(np.getTaxon2(), np.getTaxon1());
+            if (!distances.containsKey(reversePair) || !distances.get(reversePair).equals(distances.get(np))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private boolean isPositiveDefinite() {
+        for (Double distance : distances.values()) {
+            if (distance <= 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private boolean satisfiesTriangleInequality() {
+        for (String taxon1 : nodesInMatrix) {
+            for (String taxon2 : nodesInMatrix) {
+                for (String taxon3 : nodesInMatrix) {
+                    if (!taxon1.equals(taxon2) && !taxon2.equals(taxon3) && !taxon1.equals(taxon3)) {
+                        double dist12 = distances.getOrDefault(new NodePair(taxon1, taxon2), 0.0);
+                        double dist13 = distances.getOrDefault(new NodePair(taxon1, taxon3), 0.0);
+                        double dist23 = distances.getOrDefault(new NodePair(taxon2, taxon3), 0.0);
+                        // |a| + |b| >= |c|
+                        if (dist12 + dist23 < dist13 || dist12 + dist13 < dist23 || dist13 + dist23 < dist12) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
 
     protected NodePair getMinimumDistancePair() {

@@ -34,4 +34,21 @@ public class NodePair {
         // TODO !!!
         return Objects.hash(first, second);
     }
+
+    //neu eingefügt von Teammate
+    public String getTaxon2() {
+        return first;
+    }
+
+    public void setTaxon2(String taxon2) {
+        this.first = taxon2;
+    }
+
+    public String getTaxon1() {
+        return second;
+    }
+
+    public void setTaxon1(String taxon1) {
+        this.second = taxon1;
+    }
 }
