@@ -43,6 +43,8 @@ public class DistanceMatrix {
     protected double getDistance (String taxon1, String taxon2) {
         return this.distances.get(new NodePair(taxon1, taxon2));
     }
+    protected String getMetric () {} //hier Eig prüfen
+
 
     protected NodePair getMinimumDistancePair() {
         return this.minDistancePair;
