@@ -52,7 +52,6 @@ public class FastaReader {
                     } else if (isAminoacidSequence(sequence)) {
                         sequences.add(new AminoacidSequence(sequence, sequenceName));
                     }
-
                     else if (isAsciiSequence(sequence)) {
                         sequences.add(new AminoacidSequence(sequence, sequenceName));
                     }else {
@@ -87,14 +86,6 @@ public class FastaReader {
         return sequence.matches("[\\x00-\\x7F]*");
     }*/
 
-    package de.unijena.bioinf.dm23.grp06.io;
-
-import de.unijena.bioinf.dm23.grp06.algo.DistanceMatrix;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
     /**read the file line by line.
     For each line, split it into three parts: the names of the two taxa and the distance between them.
