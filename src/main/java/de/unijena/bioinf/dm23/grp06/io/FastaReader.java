@@ -62,9 +62,8 @@ public class FastaReader {
                 }
 
             }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new IOException("ERROR: An I/O error occurred while reading the FASTA file.", e);
         }
         return sequences;
     }
@@ -78,13 +77,13 @@ public class FastaReader {
         return sequence.matches("[ARNDCEQGHILKMFPSTWYVXBZJ*]*");
     }
 
-    private static boolean isAsciiSequence (String sequence) {
+    /*private static boolean isAsciiSequence (String sequence) {
         return sequence.matches("[!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~]*");
-    }
-
-    /*private static boolean isAsciiSequence(String sequence) {
-        return sequence.matches("[\\x00-\\x7F]*");
     }*/
+
+    private static boolean isAsciiSequence(String sequence) {
+        return sequence.matches("[\\x00-\\x7F]*");
+    }
 
 
     /**read the file line by line.
