@@ -46,20 +46,23 @@ public class DistanceMatrix {
 
 
     //TODO Teammate
-    protected String checkMetric () {
+    protected boolean checkMetric () {
         //Symmetrie
         if (!isSymmetric()){
-            return "Distance matrix is not symmetric.";
+            System.out.println("ERROR: Distance matrix is not symmetric.");
+            return false;
         }
         //Positive Definitheit
         if(!isPositiveDefinite()){
-            return "Distance matrix is not positive definite.";
+            System.out.println("ERROR: Distance matrix is not positive definite.");
+            return false;
         }
         //Dreiecksungleichung
         if(!satisfiesTriangleInequality()){
-            return "Distance matrix does not satisfy the triangle inequality.";
+            System.out.println("ERROR: Distance matrix does not satisfy the triangle inequality.");
+            return false;
         }
-        return "Distance matrix satisfies all metric properties.";
+        return true;
     }
     private boolean isSymmetric(){
         for (NodePair np : distances.keySet()) {
