@@ -14,7 +14,7 @@ public class DistanceMatrix {
         distances = new HashMap<>();
     }
 
-    protected void addDistance (String taxon1, String taxon2, double distance) {
+    public void addDistance(String taxon1, String taxon2, double distance) {
         NodePair tempTaxon = new NodePair(taxon1, taxon2);
         if (!distances.containsKey(tempTaxon)) {
             distances.put(tempTaxon, distance);
