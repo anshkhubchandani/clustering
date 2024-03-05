@@ -12,18 +12,17 @@ import java.util.ArrayList;
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
-    public static void main(String[] args) {
-        // Press Alt+Eingabe with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.println("Hello and welcome!");
+    public static void main(String[] args) throws IOException {
 
-        // Press Umschalt+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        Path filePath = Paths.get("/Users/larry/Git/testfiles/aquifex-tRNA-clean.fasta");
+        ArrayList<Sequence> sequences = FastaReader.readFasta(filePath);
 
-            // Press Umschalt+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Strg+F8.
-            System.out.println("i = " + i);
+        for (Sequence s : sequences) {
+            System.out.println("Name: " + s.getName());
+            System.out.println("Sequence: " +s.getSequence());
         }
-        
+
+
+        // /Users/larry/Git/testfiles/aquifex-tRNA-clean.fasta
     }
 }

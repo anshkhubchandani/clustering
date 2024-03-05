@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class FastaReader {
 
-    public static ArrayList<Sequence> readFasta(Path filepath) {
+    public static ArrayList<Sequence> readFasta(Path filepath) throws IOException {
         ArrayList<Sequence> sequences = new ArrayList<>();
         ArrayList<TreeNode> node = new ArrayList<>();
         String newLine = "";
@@ -86,29 +86,5 @@ public class FastaReader {
     }
 
 
-    /**read the file line by line.
-    For each line, split it into three parts: the names of the two taxa and the distance between them.
-    We add this information to the DistanceMatrix object using the addDistance method. **/
 
-        public static DistanceMatrix readMyMatrix(Path filepath) throws IOException {
-            DistanceMatrix matrix = new DistanceMatrix();
-
-            try (BufferedReader file = Files.newBufferedReader(filepath)) {
-                String line;
-                while ((line = file.readLine()) != null) {
-                    String[] parts = line.split("\\s+");
-                    if (parts.length != 3) {
-                        throw new IOException("Invalid matrix format");
-                    }
-
-                    String taxon1 = parts[0];
-                    String taxon2 = parts[1];
-                    double distance = Double.parseDouble(parts[2]);
-
-                    matrix.addDistance(taxon1, taxon2, distance);
-                }
-            }
-
-            return matrix;
-        }
     }
