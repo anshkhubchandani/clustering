@@ -105,6 +105,10 @@ public class DistanceMatrix {
     protected NodePair getMinimumDistancePair() {
         return this.minDistancePair;
     }
+
+    protected double getMinDistance () {
+        return this.distances.get(this.minDistancePair);
+    }
     
     protected ArrayList<String> getNodesInMatrix () {
         return this.nodesInMatrix;
