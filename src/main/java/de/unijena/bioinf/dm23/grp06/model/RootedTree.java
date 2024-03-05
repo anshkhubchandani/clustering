@@ -7,11 +7,20 @@ public class RootedTree extends AbstractTree {
     public final TreeType type = TreeType.ROOTED;
     TreeNode root;
 
-    public RootedTree (ArrayList<TreeNode> nodesOfNewTree) {
-        super(nodesOfNewTree);
+    public RootedTree (TreeNode available, ArrayList<TreeNode> nodesOfNewTree) {
+        super(available, nodesOfNewTree);
+    }
+
+    public RootedTree (TreeNode node) {
+        super(node);
     }
 
     protected void setRoot () {
         this.root = this.availableNode;
+    }
+
+    @Override
+    public TreeType getTreeType() {
+        return this.type;
     }
 }
