@@ -45,7 +45,7 @@ public class DistanceMatrix {
     }
 
 
-    //TODO Teammate
+    //TODO Test if empty
     protected boolean checkMetric () {
         //Symmetrie
         if (!isSymmetric()){
@@ -121,5 +121,13 @@ public class DistanceMatrix {
             }
         }
     }
+    //test
+//    public static void main(String[] args) {
+//        DistanceMatrix distanceMatrix = new DistanceMatrix();
+//        distanceMatrix.addDistance("Taxon1", "Taxon2", 1.0);
+//        distanceMatrix.addDistance("Taxon1", "Taxon2", 2.0);
+//        distanceMatrix.addDistance("Taxon1", "Taxon2", 5.0);
+//        distanceMatrix.checkMetric();
+//    }
 
 }
