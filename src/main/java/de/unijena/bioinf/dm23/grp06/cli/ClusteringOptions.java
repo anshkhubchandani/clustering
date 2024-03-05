@@ -19,8 +19,9 @@ public class ClusteringOptions implements Runnable{
 
         static class InputSequence {
 
-            @CommandLine.Option(names = {"-s", "--seq"}, description = "Input sequences to be used (2 or more sequences or file paths).")
+            @CommandLine.Option(names = {"-s", "--seq"}, description = "Input sequences to be used.")
             ArrayList<String> inputSeq;
+            // MULTIFASTA
 
             @CommandLine.Option(names = {"-t", "--type"}, description = "Sequence type of input sequences (DNA, RNA, amino acid AA, or ASCII).")
             String sequenceType;

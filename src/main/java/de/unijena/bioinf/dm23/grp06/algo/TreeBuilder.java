@@ -1,6 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
-import de.unijena.bioinf.dm23.grp06.algo.Clustering;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.model.*;
 
@@ -11,6 +10,7 @@ public class TreeBuilder {
 
     HashMap<String, Sequence> listOfLeafLabels;
     ArrayList<Tree> listOfTrees; // Durch HashMap ersetzen?
+    HashMap<String, Tree> mapOfTrees;
     TreeType treeType;
     Clustering clusteringMethod;
     boolean finishedBuilding;
@@ -19,46 +19,44 @@ public class TreeBuilder {
         this.treeType = type;
         this.clusteringMethod = clusteringAlgorithm;
         this.listOfLeafLabels = leafLabels;
+        createLeaves();
     }
 
     public void createLeaves () {
         String[] leaves = this.listOfLeafLabels.keySet().toArray(new String[0]);
 
         for (String leaf : leaves) {
-
-
+            addNewLeaf(new TreeNode(leaf));
         }
     }
 
-    public void buildTree () {
+    /*public void buildTree () {
 
         while (!this.finishedBuilding) {
             clusteringMethod.nextCluster();
             // TODO
+
         }
-    }
+    }*/
 
-    public void connectTrees (TreeNode connectingNode, Tree firstTree, Tree secondTree) {
-        firstTree.getAvailableNode().setThirdConnectedNode(connectingNode);
-        secondTree.getAvailableNode().setThirdConnectedNode(connectingNode);
-
+    protected void connectTrees (TreeNode connectingNode, Tree firstTree, Tree secondTree) {
         connectingNode.setFirstConnectedNode(firstTree.getAvailableNode());
         connectingNode.setSecondConnectedNode(secondTree.getAvailableNode());
 
-        // TODO neuen Baum machen mit addNewTree ? Aber vorher Listen verknüpfen ?
+        firstTree.getAvailableNode().setThirdConnectedNode(connectingNode);
+        secondTree.getAvailableNode().setThirdConnectedNode(connectingNode);
+
+        firstTree.addANode(connectingNode);
+        firstTree.addNodes(secondTree.getNodeList());
+
     }
 
-    private void addNewTree (ArrayList<TreeNode> nodes) {
+    private void addNewLeaf (TreeNode node) {
         if (this.treeType.equals(TreeType.ROOTED)) {
-            this.listOfTrees.add(new RootedTree(nodes));
+            this.mapOfTrees.put(node.getLabel(), new RootedTree(node));
         }
         else if (this.treeType.equals(TreeType.UNROOTED)) {
-            this.listOfTrees.add(new UnrootedTree(nodes));
+            this.mapOfTrees.put(node.getLabel(), new UnrootedTree(node));
         }
     }
-
-    private boolean isFinished () {
-        return listOfTrees.size() == 1;
-    }
-
 }

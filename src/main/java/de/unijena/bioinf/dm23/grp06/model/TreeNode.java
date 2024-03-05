@@ -1,8 +1,10 @@
 package de.unijena.bioinf.dm23.grp06.model;
 
+import java.util.Objects;
+
 public class TreeNode {
 
-    public final String label;
+    private final String label;
     private TreeNode firstConnectedNode;
     private TreeNode secondConnectedNode;
     private TreeNode thirdConnectedNode;
@@ -19,8 +21,8 @@ public class TreeNode {
         this.distanceToSecond = distanceToSecond;
     }
 
-    public TreeNode (String nodeLabel) {
-        this.label = nodeLabel;
+    public TreeNode (String leafLabel) {
+        this.label = leafLabel;
         this.isLeaf = true;
         this.depth = 0;
     }
@@ -33,5 +35,26 @@ public class TreeNode {
     }
     public void setThirdConnectedNode (TreeNode thirdNode) {
         this.thirdConnectedNode = thirdNode;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        else if (obj instanceof TreeNode) {
+            TreeNode anotherNode = (TreeNode) obj;
+
+        }
+        return super.equals(obj);
     }
 }

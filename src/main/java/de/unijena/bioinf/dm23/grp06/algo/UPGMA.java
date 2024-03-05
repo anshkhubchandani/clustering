@@ -24,10 +24,4 @@ public class UPGMA extends PairGroupMethods {
 
     }
 
-    @Override
-    public TreeNode nextCluster() {
-
-        return null;
-    }
-
 }
