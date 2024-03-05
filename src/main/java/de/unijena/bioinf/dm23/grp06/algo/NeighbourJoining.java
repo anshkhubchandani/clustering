@@ -9,22 +9,29 @@ public class NeighbourJoining implements Clustering {
 
     private DistanceMatrix distanceMatrix;
     private HashMap<String, Double> rValues;
-    private double minM;
-    private NodePair minMNodePair;
 
     public NeighbourJoining (DistanceMatrix distMatrix) {
         this.distanceMatrix = distMatrix;
+        rValues = new HashMap<>();
     }
 
     @Override
-    public TreeNode nextCluster() { // oder TaxonPair als return-Wert?
+    public LabelPair nextClusterCandidate() { // oder TaxonPair als return-Wert?
 
-        double distanceToFirst = (this.distanceMatrix.getDistance(minMNodePair.first, minMNodePair.second) + rValues.get(minMNodePair.first) - rValues.get(minMNodePair.second));
-        double distanceToSecond = this.distanceMatrix.getDistance(minMNodePair.first, minMNodePair.second) - distanceToFirst;
+        return calculateMinM();
+    }
 
-        // TODO !!!
+    @Override
+    public double distanceToFirst(LabelPair lastClustered) {
+        return this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second) +
+                rValues.get(lastClustered.first) - rValues.get(lastClustered.second);
+    }
 
-        return null;
+    @Override
+    public double distanceToSecond(LabelPair lastClustered) {
+        double distanceToFirst = distanceToFirst(lastClustered);
+        return this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second)
+                - distanceToFirst;
     }
 
     private void calculateRValues () {
@@ -46,9 +53,11 @@ public class NeighbourJoining implements Clustering {
 
     }
 
-    private void calculateMinM () {
+    private LabelPair calculateMinM () {
 
         ArrayList<String> nodesInDistanceMatrix = this.distanceMatrix.getNodesInMatrix();
+        LabelPair minMPair = new LabelPair(nodesInDistanceMatrix.get(0), nodesInDistanceMatrix.get(0));
+        double minM = Double.MAX_VALUE;
 
         for (String fromNode : nodesInDistanceMatrix) {
 
@@ -58,24 +67,27 @@ public class NeighbourJoining implements Clustering {
                         ((this.distanceMatrix.getDistance(fromNode, toNode) - (rValues.get(fromNode) + rValues.get(toNode))) < minM)) {
 
                     minM = this.distanceMatrix.getDistance(fromNode, toNode) - (rValues.get(fromNode) + rValues.get(toNode));
-                    minMNodePair = new NodePair(fromNode, toNode);
+                    minMPair = new LabelPair(fromNode, toNode);
                 }
             }
         }
+        return minMPair;
     }
 
-    private void updateDistanceMatrix (String newClusterNode) {
+    @Override
+    public void updateDistanceMatrix (LabelPair lastClustered, String newClusterNode) {
         double nodeDistance;
 
         for (String nodeInMatrix : this.distanceMatrix.getNodesInMatrix()) {
 
-            nodeDistance = (this.distanceMatrix.getDistance(minMNodePair.first, nodeInMatrix) +
-                    this.distanceMatrix.getDistance(minMNodePair.second, nodeInMatrix) -
-                    this.distanceMatrix.getDistance(minMNodePair.first, minMNodePair.second)) / 2;
+            nodeDistance = (this.distanceMatrix.getDistance(lastClustered.first, nodeInMatrix) +
+                    this.distanceMatrix.getDistance(lastClustered.second, nodeInMatrix) -
+                    this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second)) / 2;
             this.distanceMatrix.addDistance(nodeInMatrix, newClusterNode, nodeDistance);
         }
 
-        this.distanceMatrix.deleteDistances(minMNodePair.first, minMNodePair.second);
+        this.distanceMatrix.deleteDistances(lastClustered.first, lastClustered.second);
+        calculateRValues();
     }
 
 }

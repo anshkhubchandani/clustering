@@ -10,18 +10,28 @@ public abstract class PairGroupMethods implements Clustering {
         this.distanceMatrix = distMatrix;
     }
 
-    protected TreeNode calculateNextCluster () {
+    @Override
+    public LabelPair nextClusterCandidate() {
 
+        LabelPair nextToCluster = this.distanceMatrix.getMinimumDistancePair();
 
-
-        return null;
+        return nextToCluster;
     }
 
-    private void updateDistanceMatrix (String firstNode, String secondNode, String newClusterNode) {
+    @Override
+    public double distanceToFirst(LabelPair lastClustered) {
+        return this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second);
+    }
 
-        calculateNewDistances(firstNode, secondNode, newClusterNode);
-        this.distanceMatrix.deleteDistances(firstNode, secondNode);
-        this.distanceMatrix.findNewMinimum();
+    @Override
+    public double distanceToSecond(LabelPair lastClustered) {
+        return distanceToFirst(lastClustered);
+    }
+
+    public void updateDistanceMatrix (LabelPair lastClustered, String newClusterNode) {
+
+        calculateNewDistances(lastClustered.first, lastClustered.second, newClusterNode);
+        this.distanceMatrix.deleteDistances(lastClustered.first, lastClustered.second);
 
     }
 

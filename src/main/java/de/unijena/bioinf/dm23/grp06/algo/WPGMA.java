@@ -22,12 +22,4 @@ public class WPGMA extends PairGroupMethods {
 
     }
 
-    @Override
-    public TreeNode nextCluster() {
-
-
-
-        return null;
-    }
-
 }
