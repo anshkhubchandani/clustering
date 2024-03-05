@@ -31,8 +31,17 @@ public class LabelPair {
 
     @Override
     public int hashCode() {
-        // TODO !!!
-        return Objects.hash(first, second);
+        int result1 = 0;
+        int result2 = 0;
+        int prim = 17;
+
+        if (first != null) {
+            result1 = 31 * prim + first.hashCode();
+        }
+        if (second != null) {
+            result2 = 31 * prim + second.hashCode();
+        }
+        return result1 + result2;
     }
 
     //neu eingefügt von Teammate
