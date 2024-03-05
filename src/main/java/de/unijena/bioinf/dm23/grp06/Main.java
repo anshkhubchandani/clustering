@@ -1,5 +1,14 @@
 package de.unijena.bioinf.dm23.grp06;
 
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
+import de.unijena.bioinf.dm23.grp06.io.FastaReader;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+
+
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
