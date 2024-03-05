@@ -8,6 +8,6 @@ public interface Tree {
     ArrayList<TreeNode> getNodeList ();
     TreeNode getAvailableNode ();
     void setAvailableNode (TreeNode node);
-    void addNodes (ArrayList<TreeNode> newNodes);
-    void addANode (TreeNode node);
+    void addNodesFromList (ArrayList<TreeNode> newNodes);
+    void addNode(TreeNode node);
 }

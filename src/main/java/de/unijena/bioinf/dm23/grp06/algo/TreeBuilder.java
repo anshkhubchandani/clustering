@@ -3,17 +3,15 @@ package de.unijena.bioinf.dm23.grp06.algo;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.model.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TreeBuilder {
 
-    HashMap<String, Sequence> listOfLeafLabels;
-    ArrayList<Tree> listOfTrees; // Durch HashMap ersetzen?
-    HashMap<String, Tree> mapOfTrees;
-    TreeType treeType;
-    Clustering clusteringMethod;
-    boolean finishedBuilding;
+    private HashMap<String, Sequence> listOfLeafLabels;
+    private HashMap<String, Tree> mapOfTrees;
+    private final TreeType treeType;
+    private Clustering clusteringMethod;
+    private boolean finishedBuilding;
 
     public TreeBuilder (TreeType type, Clustering clusteringAlgorithm, HashMap<String, Sequence> leafLabels) {
         this.treeType = type;
@@ -22,33 +20,57 @@ public class TreeBuilder {
         createLeaves();
     }
 
-    public void createLeaves () {
+    private void createLeaves () {
         String[] leaves = this.listOfLeafLabels.keySet().toArray(new String[0]);
 
         for (String leaf : leaves) {
-            addNewLeaf(new TreeNode(leaf));
+            addNewLeaf(new TreeNode(leaf, true));
         }
     }
 
-    /*public void buildTree () {
+    public void buildTree () {
+        LabelPair nextCluster;
+        String newLabel;
 
         while (!this.finishedBuilding) {
-            clusteringMethod.nextCluster();
-            // TODO
 
+            nextCluster = this.clusteringMethod.nextClusterCandidate();
+            newLabel = nextCluster.first.concat(nextCluster.second);
+
+            connectTrees(nextCluster, newLabel, this.clusteringMethod.distanceToFirst(nextCluster), this.clusteringMethod.distanceToSecond(nextCluster));
+
+            this.clusteringMethod.updateDistanceMatrix(nextCluster, newLabel);
         }
-    }*/
 
-    protected void connectTrees (TreeNode connectingNode, Tree firstTree, Tree secondTree) {
-        connectingNode.setFirstConnectedNode(firstTree.getAvailableNode());
-        connectingNode.setSecondConnectedNode(secondTree.getAvailableNode());
+    }
 
-        firstTree.getAvailableNode().setThirdConnectedNode(connectingNode);
-        secondTree.getAvailableNode().setThirdConnectedNode(connectingNode);
+    private void connectTrees (LabelPair nextCluster, String newLabel, double distanceToFirst, double distanceToSecond) {
 
-        firstTree.addANode(connectingNode);
-        firstTree.addNodes(secondTree.getNodeList());
+        Tree oneTree = mapOfTrees.get(nextCluster.first);
+        Tree otherTree = mapOfTrees.get(nextCluster.second);
+        mapOfTrees.remove(nextCluster.first);
+        mapOfTrees.remove(nextCluster.second);
 
+        TreeNode connectingNode = new TreeNode(newLabel, false);
+
+        connectNodes(connectingNode, oneTree.getAvailableNode(), distanceToFirst);
+        connectNodes(connectingNode, otherTree.getAvailableNode(), distanceToSecond);
+
+        oneTree.addNode(connectingNode);
+        oneTree.setAvailableNode(connectingNode);
+        oneTree.addNodesFromList(otherTree.getNodeList());
+
+        mapOfTrees.put(newLabel, oneTree);
+    }
+
+    private void connectNodes (TreeNode newNode, TreeNode nodeToAdd, double distance) {
+        if (newNode.getFirstConnectedNode() == null) {
+            newNode.setFirstConnectedNode(nodeToAdd, distance);
+        }
+        else if (newNode.getSecondConnectedNode() == null) {
+            newNode.setSecondConnectedNode(nodeToAdd, distance);
+        }
+        nodeToAdd.setThirdConnectedNode(newNode, distance);
     }
 
     private void addNewLeaf (TreeNode node) {
@@ -59,4 +81,5 @@ public class TreeBuilder {
             this.mapOfTrees.put(node.getLabel(), new UnrootedTree(node));
         }
     }
+
 }
