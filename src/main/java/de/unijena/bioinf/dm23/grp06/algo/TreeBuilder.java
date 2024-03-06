@@ -32,10 +32,10 @@ public class TreeBuilder {
         LabelPair nextCluster;
         String newLabel;
 
-        while (!this.finishedBuilding) {
+        while (!isFinishedBuilding()) {
 
             nextCluster = this.clusteringMethod.nextClusterCandidate();
-            newLabel = nextCluster.first.concat(nextCluster.second);
+            newLabel = nextCluster.first.concat("-").concat(nextCluster.second);
 
             connectTrees(nextCluster, newLabel, this.clusteringMethod.distanceToFirst(nextCluster), this.clusteringMethod.distanceToSecond(nextCluster));
 
@@ -82,4 +82,7 @@ public class TreeBuilder {
         }
     }
 
+    public boolean isFinishedBuilding () {
+        return (this.finishedBuilding == (this.mapOfTrees.size() == 1));
+    }
 }

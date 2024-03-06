@@ -1,6 +1,7 @@
 package de.unijena.bioinf.dm23.grp06.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class AbstractTree implements Tree {
 
@@ -23,12 +24,12 @@ public abstract class AbstractTree implements Tree {
     }
 
     @Override
-    public void addNodes (ArrayList<TreeNode> newNodes) {
+    public void addNodesFromList(ArrayList<TreeNode> newNodes) {
         treeNodeList.addAll(newNodes);
     }
 
     @Override
-    public void addANode(TreeNode node) {
+    public void addNode(TreeNode node) {
         treeNodeList.add(node);
     }
 
@@ -40,17 +41,6 @@ public abstract class AbstractTree implements Tree {
     @Override
     public TreeNode getAvailableNode() {
         return availableNode;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        // TODO
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
 }
