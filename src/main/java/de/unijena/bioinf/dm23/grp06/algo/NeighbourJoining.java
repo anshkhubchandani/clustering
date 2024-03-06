@@ -34,7 +34,7 @@ public class NeighbourJoining implements Clustering {
                 - distanceToFirst;
     }
 
-    private void calculateRValues () {
+    public void calculateRValues () {
 
         double sumOfDistances;
         ArrayList<String> nodesInDistanceMatrix = this.distanceMatrix.getNodesInMatrix();
@@ -53,7 +53,7 @@ public class NeighbourJoining implements Clustering {
 
     }
 
-    private LabelPair calculateMinM () {
+    public LabelPair calculateMinM () {
 
         ArrayList<String> nodesInDistanceMatrix = this.distanceMatrix.getNodesInMatrix();
         LabelPair minMPair = new LabelPair(nodesInDistanceMatrix.get(0), nodesInDistanceMatrix.get(0));
