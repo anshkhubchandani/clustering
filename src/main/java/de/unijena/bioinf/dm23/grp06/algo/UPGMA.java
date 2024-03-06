@@ -11,7 +11,7 @@ public class UPGMA extends PairGroupMethods {
     }
 
     @Override
-    protected void calculateNewDistances(String firstNode, String secondNode, String newClusterNode) {
+    public void calculateNewDistances(String firstNode, String secondNode, String newClusterNode) {
 
         double newDistance;
         ArrayList<String> nodesInDistanceMatrix = this.distanceMatrix.getNodesInMatrix();
