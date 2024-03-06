@@ -8,10 +8,10 @@ public class TreeNode {
     private TreeNode firstConnectedNode;
     private TreeNode secondConnectedNode;
     private TreeNode thirdConnectedNode;
-    double distanceToFirst;
-    double distanceToSecond;
+    public double distanceToFirst;
+    public double distanceToSecond;
     double distanceToThird;
-    final boolean isLeaf;
+    public final boolean isLeaf;
 
     /* public TreeNode (String label, TreeNode first, double distanceToFirst, TreeNode second, double distanceToSecond) {
         this.label = label;

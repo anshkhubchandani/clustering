@@ -3,11 +3,16 @@ package de.unijena.bioinf.dm23.grp06;
 import de.unijena.bioinf.dm23.grp06.algo.*;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.io.FastaReader;
+import de.unijena.bioinf.dm23.grp06.io.NewickWriter;
+import de.unijena.bioinf.dm23.grp06.model.Tree;
+import de.unijena.bioinf.dm23.grp06.model.TreeNode;
+import de.unijena.bioinf.dm23.grp06.model.TreeType;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
@@ -51,7 +56,7 @@ public class Main {
         System.out.println(lp3.getTaxon1() + " " + test.distanceToFirst(lp3) + " "
                 +  lp3.getTaxon2() + " " + test.distanceToSecond(lp3));
         */
-
+ /*
         DistanceMatrix dm = new DistanceMatrix();
         dm.addDistance("Mensch", "Maus", 3);
         dm.addDistance("Mensch", "Rose", 14);
@@ -80,6 +85,64 @@ public class Main {
                 +  lp3.getTaxon2() + " " + test.distanceToSecond(lp3));
 
 
-        // /Users/larry/Git/testfiles/aquifex-tRNA-clean.fasta
+        // /Users/larry/Git/testfiles/aquifex-tRNA-clean.fasta */
+
+        //Sample tree for NewickWriter
+        TreeNode leaf1 = new TreeNode("ATGC", true); // A
+        TreeNode leaf2 = new TreeNode("GCTA", true); // B
+        TreeNode leaf3 = new TreeNode("TACG", true); // C
+        TreeNode internal1 = new TreeNode("Internal1",false); // Internal1
+        internal1.setFirstConnectedNode(leaf1, 0.1);
+        internal1.setSecondConnectedNode(leaf2, 0.2);
+        TreeNode root = new TreeNode("Root",false); // Root
+        root.setFirstConnectedNode(internal1, 0.3);
+        root.setSecondConnectedNode(leaf3, 0.4);
+
+        // Create a sample label map
+        HashMap<String, String> labelMap = new HashMap<>();
+        labelMap.put("A", "1");
+        labelMap.put("B", "2");
+        labelMap.put("C", "3");
+
+        // Create a tree object
+        Tree tree = new Tree() {
+            private TreeNode availableNode = root;
+            private ArrayList<TreeNode> nodeList = new ArrayList<>();
+
+            @Override
+            public TreeType getTreeType() {
+                return TreeType.ROOTED; // Adjust the return type based on your implementation
+            }
+
+            @Override
+            public ArrayList<TreeNode> getNodeList() {
+                return nodeList;
+            }
+
+            @Override
+            public TreeNode getAvailableNode() {
+                return availableNode;
+            }
+
+            @Override
+            public void setAvailableNode(TreeNode node) {
+                this.availableNode = node;
+            }
+
+            @Override
+            public void addNodesFromList(ArrayList<TreeNode> newNodes) {
+                nodeList.addAll(newNodes);
+            }
+
+            @Override
+            public void addNode(TreeNode node) {
+                nodeList.add(node);
+            }
+        };
+
+        // Test writing the tree to a file
+        String filepath = "tree.newick";
+        NewickWriter.writeTreeToFile(tree, filepath);
+        System.out.println("Tree written to file: " + filepath);
     }
-}
+    }
