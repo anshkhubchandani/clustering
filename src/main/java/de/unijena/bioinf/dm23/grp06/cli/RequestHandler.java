@@ -4,8 +4,12 @@ import de.unijena.bioinf.dm23.grp06.algo.*;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.NeedlemanWunsch;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.Scorer;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
+import de.unijena.bioinf.dm23.grp06.io.DistanceMatrixReader;
 import de.unijena.bioinf.dm23.grp06.model.TreeType;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,14 +21,29 @@ public class RequestHandler {
     ArrayList<Sequence> inputSequences;
     HashMap<String, Sequence> sequenceLabels;
 
-    public RequestHandler (String algorithm, ArrayList<String> inputPath,HashMap<String, Sequence> leafLabels, TreeType type) {
+    public RequestHandler (String algorithm, ArrayList<String> inputPath, TreeType type) {
         this.algo = algorithm;
-        //createAlignments();
-        setClusteringAlgorithm(algorithm, distanceMatrix);
-        createTreeBuilder(leafLabels, type);
+
+        // setClusteringAlgorithm(algorithm, distanceMatrix);
+    }
+
+    public RequestHandler (String algorithm, String distanceMatrixPath, TreeType type) {
+        // this.algo = algorithm;
+        setClusteringAlgorithm(algorithm, readMatrix(distanceMatrixPath));
     }
 
     // TODO readFastaFiles
+
+    private DistanceMatrix readMatrix (String distanceMatrixPath) {
+        DistanceMatrix dm = new DistanceMatrix();
+        try {
+            dm = DistanceMatrixReader.readMyMatrix(Paths.get(distanceMatrixPath));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return dm;
+    }
 
     private void connectSequencesToLabels (ArrayList<Sequence> sequences) {
         String label; // TODO !!!
