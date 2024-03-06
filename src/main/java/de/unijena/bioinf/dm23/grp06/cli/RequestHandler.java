@@ -3,8 +3,10 @@ package de.unijena.bioinf.dm23.grp06.cli;
 import de.unijena.bioinf.dm23.grp06.algo.*;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.NeedlemanWunsch;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.Scorer;
+import de.unijena.bioinf.dm23.grp06.exactsearch.io.Fasta;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.io.DistanceMatrixReader;
+import de.unijena.bioinf.dm23.grp06.io.FastaReader;
 import de.unijena.bioinf.dm23.grp06.model.TreeType;
 
 import java.io.IOException;
@@ -16,13 +18,15 @@ import java.util.HashMap;
 public class RequestHandler {
     String algo;
     Clustering clusteringAlgorithm;
+    private FastaReader fastaReader;
     TreeBuilder treeBuilder;
     DistanceMatrix distanceMatrix;
     ArrayList<Sequence> inputSequences;
     HashMap<String, Sequence> sequenceLabels;
 
-    public RequestHandler (String algorithm, ArrayList<String> inputPath, TreeType type) {
+    public RequestHandler (String algorithm, ArrayList<String> inputPath, TreeType type, FastaReader fastaReader) {
         this.algo = algorithm;
+
 
         // setClusteringAlgorithm(algorithm, distanceMatrix);
     }
@@ -32,7 +36,14 @@ public class RequestHandler {
         setClusteringAlgorithm(algorithm, readMatrix(distanceMatrixPath));
     }
 
-    // TODO readFastaFiles
+    public ArrayList<Sequence> readFastaFromFile(Path filepath) throws IOException {
+        try {
+            return FastaReader.readFasta(filepath);
+        } catch (IOException e) {
+            throw new IOException("ERROR: Fasta file can not be read.", e);
+        }
+    }
+
 
     private DistanceMatrix readMatrix (String distanceMatrixPath) {
         DistanceMatrix dm = new DistanceMatrix();
@@ -49,7 +60,7 @@ public class RequestHandler {
         String label; // TODO !!!
         sequenceLabels = new HashMap<>();
         for (int i = 1; i <= sequences.size(); i++) {
-            label = "Seq" + Integer.toString(i);
+            label = "Seq" + i;
             sequenceLabels.put(label, sequences.get(i-1));
         }
     }
