@@ -1,12 +1,16 @@
 package de.unijena.bioinf.dm23.grp06.model;
 
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public abstract class AbstractTree implements Tree {
 
     TreeNode availableNode;
     ArrayList<TreeNode> treeNodeList;
+    HashMap<String, Sequence> listOfLeafLabels;
 
     public AbstractTree (TreeNode available, ArrayList<TreeNode> nodesOfNewTree) {
         this.treeNodeList = nodesOfNewTree;
@@ -16,6 +20,12 @@ public abstract class AbstractTree implements Tree {
         this.treeNodeList = new ArrayList<>();
         this.treeNodeList.add(node);
         this.availableNode = this.treeNodeList.get(0);
+    }
+
+    @Override
+    public HashMap<String, Sequence> getListOfLeafLabels() {
+        // TODO !!!
+        return null;
     }
 
     @Override
