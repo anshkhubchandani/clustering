@@ -20,7 +20,7 @@ public class FastaReader {
 
     public static ArrayList<Sequence> readFasta(Path filepath) throws IOException {
         ArrayList<Sequence> sequences = new ArrayList<>();
-        ArrayList<TreeNode> node = new ArrayList<>();
+        //ArrayList<TreeNode> node = new ArrayList<>();
         String newLine = "";
         String sequenceName;
 
@@ -33,7 +33,7 @@ public class FastaReader {
             }
             while(newLine != null) {
                 sequenceName = newLine.substring(1);
-                node.add(new TreeNode(sequenceName));
+                //node.add(new TreeNode(sequenceName));
                 StringBuilder sequenceBuilder = new StringBuilder();
                 while (true) {
                     newLine = file.readLine();

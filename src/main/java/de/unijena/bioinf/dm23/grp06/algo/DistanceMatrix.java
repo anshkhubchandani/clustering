@@ -11,15 +11,25 @@ public class DistanceMatrix {
 
     public DistanceMatrix() {
         distances = new HashMap<>();
+        nodesInMatrix = new ArrayList<>();
     }
 
     public void addDistance(String taxon1, String taxon2, double distance) {
+        addToNodeList(taxon1);
+        addToNodeList(taxon2);
+
         LabelPair tempTaxon = new LabelPair(taxon1, taxon2);
         if (!distances.containsKey(tempTaxon)) {
             distances.put(tempTaxon, distance);
         }
         else {
             System.err.println("Couldn't add new distance to distance matrix.");
+        }
+    }
+
+    private void addToNodeList (String taxon) {
+        if (!nodesInMatrix.contains(taxon)) {
+            nodesInMatrix.add(taxon);
         }
     }
 
@@ -38,7 +48,7 @@ public class DistanceMatrix {
 
     }
     
-    protected double getDistance (String taxon1, String taxon2) {
+    public double getDistance (String taxon1, String taxon2) {
         return this.distances.get(new LabelPair(taxon1, taxon2));
     }
 

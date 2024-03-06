@@ -10,7 +10,7 @@ public class TreeBuilder {
     private HashMap<String, Sequence> listOfLeafLabels;
     private HashMap<String, Tree> mapOfTrees;
     private final TreeType treeType;
-    private Clustering clusteringMethod;
+    private final Clustering clusteringMethod;
     private boolean finishedBuilding;
 
     public TreeBuilder (TreeType type, Clustering clusteringAlgorithm, HashMap<String, Sequence> leafLabels) {
