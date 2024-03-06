@@ -4,10 +4,13 @@ import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 //Reader und Writer fuer FASTA Dateien
 public class NewickWriter {
+    private static final DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public static void writeTreeToFile(Tree tree, String filepath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))) {
@@ -19,26 +22,25 @@ public class NewickWriter {
             e.printStackTrace();
         }
     }
-
     private static void writeNode(TreeNode node, BufferedWriter writer) throws IOException {
+        if (node == null) {
+            return; // Skip writing if the node is null
+        }
         if (node.isLeaf) {
             // Blattknoten, schreibe den Knotenwert
             writer.write(node.getLabel());
         } else {
-            // Interner Knoten, schreibe rekursiv seine Kinder
+            // Interner Knoten, rekursiv die Kinder schreiben
             writer.write("(");
             writeNode(node.getFirstConnectedNode(), writer);
+            writer.write(":");
+            writer.write(decimalFormat.format(node.distanceToFirst).replace(",", "."));
             writer.write(",");
             writeNode(node.getSecondConnectedNode(), writer);
-            if (node.getThirdConnectedNode() != null) {
-                writer.write(",");
-                writeNode(node.getThirdConnectedNode(), writer);
-            }
+            writer.write(":");
+            writer.write(decimalFormat.format(node.distanceToSecond).replace(",", "."));
             writer.write(")");
-            if (node.distanceToFirst > 0 || node.distanceToSecond > 0) {
-                writer.write(":");
-                writer.write(String.valueOf(node.distanceToFirst + node.distanceToSecond));
-            }
         }
     }
+
 }

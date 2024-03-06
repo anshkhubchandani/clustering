@@ -88,9 +88,9 @@ public class Main {
         // /Users/larry/Git/testfiles/aquifex-tRNA-clean.fasta */
 
         //Sample tree for NewickWriter
-        TreeNode leaf1 = new TreeNode("ATGC", true); // A
-        TreeNode leaf2 = new TreeNode("GCTA", true); // B
-        TreeNode leaf3 = new TreeNode("TACG", true); // C
+        TreeNode leaf1 = new TreeNode("A", true); // A
+        TreeNode leaf2 = new TreeNode("B", true); // B
+        TreeNode leaf3 = new TreeNode("C", true); // C
         TreeNode internal1 = new TreeNode("Internal1",false); // Internal1
         internal1.setFirstConnectedNode(leaf1, 0.1);
         internal1.setSecondConnectedNode(leaf2, 0.2);
@@ -103,6 +103,8 @@ public class Main {
         labelMap.put("A", "1");
         labelMap.put("B", "2");
         labelMap.put("C", "3");
+        labelMap.put("Internal1", "Internal1");
+        labelMap.put("Root", "Root");
 
         // Create a tree object
         Tree tree = new Tree() {

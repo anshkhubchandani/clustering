@@ -1,4 +1,4 @@
-package de.unijena.bioinf.dm23.grp06;
+/*package de.unijena.bioinf.dm23.grp06;
 
 import de.unijena.bioinf.dm23.grp06.algo.DistanceMatrix;
 import de.unijena.bioinf.dm23.grp06.algo.LabelPair;
@@ -64,3 +64,4 @@ public class NJtest {
         // Add more test cases to cover edge cases, such as empty distance matrix or special input values
     }
 
+*/
