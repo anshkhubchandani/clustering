@@ -1,6 +1,8 @@
 package de.unijena.bioinf.dm23.grp06.cli;
 
 import de.unijena.bioinf.dm23.grp06.algo.*;
+import de.unijena.bioinf.dm23.grp06.alignments.algo.NeedlemanWunsch;
+import de.unijena.bioinf.dm23.grp06.alignments.algo.Scorer;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.model.TreeType;
 
@@ -17,7 +19,7 @@ public class RequestHandler {
 
     public RequestHandler (String algorithm, ArrayList<String> inputPath,HashMap<String, Sequence> leafLabels, TreeType type) {
         this.algo = algorithm;
-        createAlignments();
+        //createAlignments();
         setClusteringAlgorithm(algorithm, distanceMatrix);
         createTreeBuilder(leafLabels, type);
     }
