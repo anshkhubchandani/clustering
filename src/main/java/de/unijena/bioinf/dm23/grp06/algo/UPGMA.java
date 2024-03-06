@@ -2,6 +2,8 @@ package de.unijena.bioinf.dm23.grp06.algo;
 
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 
+import java.util.ArrayList;
+
 public class UPGMA extends PairGroupMethods {
 
     public UPGMA (DistanceMatrix distMatrix) {
@@ -12,16 +14,22 @@ public class UPGMA extends PairGroupMethods {
     protected void calculateNewDistances(String firstNode, String secondNode, String newClusterNode) {
 
         double newDistance;
+        ArrayList<String> nodesInDistanceMatrix = this.distanceMatrix.getNodesInMatrix();
+        int firstNodeCluster = numberOfCluster(firstNode);
+        int secondNodeCluster = numberOfCluster(secondNode);
 
-        for (String nodeInMatrix : (this.distanceMatrix.getNodesInMatrix())) {
+        for (String nodeInMatrix : nodesInDistanceMatrix) {
 
-            newDistance = ((firstNode.length() * this.distanceMatrix.getDistance(firstNode, nodeInMatrix)) +
-                    (secondNode.length() * this.distanceMatrix.getDistance(secondNode, nodeInMatrix))) /
-                    (firstNode.length() + secondNode.length());
+            newDistance = ((firstNodeCluster * this.distanceMatrix.getDistance(firstNode, nodeInMatrix)) +
+                    (secondNodeCluster * this.distanceMatrix.getDistance(secondNode, nodeInMatrix))) /
+                    (firstNodeCluster + secondNodeCluster);
             this.distanceMatrix.addDistance(nodeInMatrix, newClusterNode, newDistance);
 
         }
-
+        this.distanceMatrix.addToNodeList(newClusterNode);
     }
 
+    private int numberOfCluster (String node) {
+        return node.split("-").length;
+    }
 }

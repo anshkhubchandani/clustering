@@ -15,8 +15,8 @@ public class DistanceMatrix {
     }
 
     public void addDistance(String taxon1, String taxon2, double distance) {
-        addToNodeList(taxon1);
-        addToNodeList(taxon2);
+        //addToNodeList(taxon1);
+        //addToNodeList(taxon2);
 
         LabelPair tempTaxon = new LabelPair(taxon1, taxon2);
         if (!distances.containsKey(tempTaxon)) {
@@ -27,13 +27,16 @@ public class DistanceMatrix {
         }
     }
 
-    private void addToNodeList (String taxon) {
+    public void addToNodeList (String taxon) {
         if (!nodesInMatrix.contains(taxon)) {
             nodesInMatrix.add(taxon);
         }
     }
 
     protected void deleteDistances (String taxon1, String taxon2) {
+
+        deleteFromNodeList(taxon1);
+        deleteFromNodeList(taxon2);
 
         LabelPair[] keyArray = distances.keySet().toArray(new LabelPair[0]);
 
@@ -49,9 +52,30 @@ public class DistanceMatrix {
     }
     
     public double getDistance (String taxon1, String taxon2) {
-        return this.distances.get(new LabelPair(taxon1, taxon2));
+        return taxon1.equals(taxon2) ? 0 : this.distances.get(new LabelPair(taxon1, taxon2));
+    }
+    protected ArrayList<String> getNodesInMatrix () {
+        return this.nodesInMatrix;
     }
 
+    private void deleteFromNodeList (String nodeLabel) {
+        this.nodesInMatrix.remove(nodeLabel);
+    }
+
+    protected LabelPair getMinimumDistancePair (){
+        LabelPair[] allKeys = distances.keySet().toArray(new LabelPair[0]);
+        double tempMinDistance = Double.MAX_VALUE;
+        LabelPair minNodePair = allKeys[0];
+
+        for (LabelPair np : allKeys) {
+            if (distances.get(np) < tempMinDistance) {
+                tempMinDistance = distances.get(np);
+                //this.minDistancePair = np;
+                minNodePair = np;
+            }
+        }
+        return minNodePair;
+    }
 
     //TODO
     protected boolean checkMetric () {
@@ -121,25 +145,7 @@ public class DistanceMatrix {
     /*protected double getMinDistance () {
         return this.distances.get(this.minDistancePair);
     }*/
-    
-    protected ArrayList<String> getNodesInMatrix () {
-        return this.nodesInMatrix;
-    }
 
-    protected LabelPair getMinimumDistancePair (){
-        LabelPair[] allKeys = distances.keySet().toArray(new LabelPair[0]);
-        double tempMinDistance = Double.MAX_VALUE;
-        LabelPair minNodePair = allKeys[0];
-
-        for (LabelPair np : allKeys) {
-            if (distances.get(np) < tempMinDistance) {
-                tempMinDistance = distances.get(np);
-                //this.minDistancePair = np;
-                minNodePair = np;
-            }
-        }
-        return minNodePair;
-    }
     //test
 //    public static void main(String[] args) {
 //        DistanceMatrix distanceMatrix = new DistanceMatrix();

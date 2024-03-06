@@ -30,16 +30,25 @@ public class Main {
         dm.addDistance("B", "C", 3);
         dm.addDistance("B", "D", 8);
         dm.addDistance("C", "D", 11);
-        Clustering test = new WPGMA(dm);
+        dm.addToNodeList("A");
+        dm.addToNodeList("B");
+        dm.addToNodeList("C");
+        dm.addToNodeList("D");
+        Clustering test = new UPGMA(dm);
 
         LabelPair lp1 = test.nextClusterCandidate();
         System.out.println(lp1.getTaxon1() + " " + test.distanceToFirst(lp1) + " "
 
                 +  lp1.getTaxon2() + " " + test.distanceToSecond(lp1));
-        test.updateDistanceMatrix(lp1, "newCluster");
+        test.updateDistanceMatrix(lp1, lp1.getTaxon1().concat("-").concat(lp1.getTaxon2()));
         LabelPair lp2 = test.nextClusterCandidate();
         System.out.println(lp2.getTaxon1() + " " + test.distanceToFirst(lp2) + " "
                 +  lp2.getTaxon2() + " " + test.distanceToSecond(lp2));
+        test.updateDistanceMatrix(lp2, lp2.getTaxon1().concat("-").concat(lp2.getTaxon2()));
+        LabelPair lp3 = test.nextClusterCandidate();
+        System.out.println(lp3.getTaxon1() + " " + test.distanceToFirst(lp3) + " "
+                +  lp3.getTaxon2() + " " + test.distanceToSecond(lp3));
+
 
 
         // /Users/larry/Git/testfiles/aquifex-tRNA-clean.fasta

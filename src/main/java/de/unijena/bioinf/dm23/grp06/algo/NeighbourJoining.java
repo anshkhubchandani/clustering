@@ -77,8 +77,9 @@ public class NeighbourJoining implements Clustering {
     @Override
     public void updateDistanceMatrix (LabelPair lastClustered, String newClusterNode) {
         double nodeDistance;
+        ArrayList<String> nodesInDistanceMatrix = this.distanceMatrix.getNodesInMatrix();
 
-        for (String nodeInMatrix : this.distanceMatrix.getNodesInMatrix()) {
+        for (String nodeInMatrix : nodesInDistanceMatrix) {
 
             nodeDistance = (this.distanceMatrix.getDistance(lastClustered.first, nodeInMatrix) +
                     this.distanceMatrix.getDistance(lastClustered.second, nodeInMatrix) -
