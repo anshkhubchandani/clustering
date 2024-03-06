@@ -1,4 +1,5 @@
 package de.unijena.bioinf.dm23.grp06;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.io.NewickWriter;
 import de.unijena.bioinf.dm23.grp06.model.Tree;
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
@@ -37,6 +38,7 @@ public class NewickWriterTest {
         TreeNode root = new TreeNode("Root", false);
         root.setFirstConnectedNode(internal2, 0.5);
 
+
         // Create a tree object
         Tree tree = new Tree() {
             private TreeNode availableNode = root;
@@ -71,15 +73,19 @@ public class NewickWriterTest {
             public void addNode(TreeNode node) {
                 nodeList.add(node);
             }
+
+            @Override
+            public HashMap<String, Sequence> getListOfLeafLabels() {
+                return null;
+            }
         };
 
-        // Define the expected Newick format string
         String expectedNewick = "(((A:0.1,B:0.2):0.3,C:0.4):0.5)";
 
         // Define the file path for the test output
         String filepath = "test_tree_simple.newick";
 
-        // Call the method to write the tree to file
+        // write the tree to file
         NewickWriter.writeTreeToFile(tree, filepath);
 
         // Read the content of the file

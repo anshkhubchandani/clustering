@@ -27,10 +27,10 @@ public class NewickWriter {
             return; // Skip writing if the node is null
         }
         if (node.isLeaf) {
-            // Blattknoten, schreibe den Knotenwert
+            // Leaf node, write the node label
             writer.write(node.getLabel());
         } else {
-            // Interner Knoten, rekursiv die Kinder schreiben
+            // Internal node, recursively write the children
             writer.write("(");
             writeNode(node.getFirstConnectedNode(), writer);
             writer.write(":");

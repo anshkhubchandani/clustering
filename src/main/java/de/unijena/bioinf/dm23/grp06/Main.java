@@ -103,8 +103,8 @@ public class Main {
         labelMap.put("A", "1");
         labelMap.put("B", "2");
         labelMap.put("C", "3");
-        labelMap.put("Internal1", "Internal1");
-        labelMap.put("Root", "Root");
+        labelMap.put("Internal1", "4");
+        labelMap.put("Root", "5");
 
         // Create a tree object
         Tree tree = new Tree() {
@@ -139,6 +139,11 @@ public class Main {
             @Override
             public void addNode(TreeNode node) {
                 nodeList.add(node);
+            }
+
+            @Override
+            public HashMap<String, Sequence> getListOfLeafLabels() {
+                return null;
             }
         };
 
