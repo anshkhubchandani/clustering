@@ -24,6 +24,8 @@ public class RequestHandler {
         createTreeBuilder(leafLabels, type);
     }
 
+    // TODO readFastaFiles
+
     private void connectSequencesToLabels (ArrayList<Sequence> sequences) {
         String label; // TODO !!!
         sequenceLabels = new HashMap<>();

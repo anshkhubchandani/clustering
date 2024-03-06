@@ -56,7 +56,7 @@ public class DistanceMatrix {
     //TODO
     protected boolean checkMetric () {
         if(distances.isEmpty()){
-            System.out.println("ERROR: Metric is null");
+            System.out.println("ERROR: Distance matrix is null");
             return false;
         }
         //Symmetrie
