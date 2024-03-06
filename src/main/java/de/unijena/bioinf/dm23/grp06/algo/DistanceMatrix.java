@@ -43,8 +43,12 @@ public class DistanceMatrix {
     }
 
 
-    //TODO Test if empty
+    //TODO
     protected boolean checkMetric () {
+        if(distances.isEmpty()){
+            System.out.println("ERROR: Metric is null");
+            return false;
+        }
         //Symmetrie
         if (!isSymmetric()){
             System.out.println("ERROR: Distance matrix is not symmetric.");
