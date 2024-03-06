@@ -46,7 +46,7 @@ public class RequestHandler {
     }
 
     private void connectSequencesToLabels (ArrayList<Sequence> sequences) {
-        String label; // TODO !!!
+        String label;
         sequenceLabels = new HashMap<>();
         for (int i = 1; i <= sequences.size(); i++) {
             label = "Seq" + Integer.toString(i);
@@ -92,9 +92,5 @@ public class RequestHandler {
     private void createTreeBuilder (HashMap<String, Sequence> leafLabels, TreeType type) {
         // TreeBuilder initialisieren
         TreeBuilder treeBuilder = new TreeBuilder(type, clusteringAlgorithm, leafLabels);
-    }
-
-    private String getStringForLabeling () {
-        return "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }
 }

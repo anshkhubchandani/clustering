@@ -13,6 +13,7 @@ public class NeighbourJoining implements Clustering {
     public NeighbourJoining (DistanceMatrix distMatrix) {
         this.distanceMatrix = distMatrix;
         rValues = new HashMap<>();
+        calculateRValues();
     }
 
     @Override
@@ -23,8 +24,8 @@ public class NeighbourJoining implements Clustering {
 
     @Override
     public double distanceToFirst(LabelPair lastClustered) {
-        return this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second) +
-                rValues.get(lastClustered.first) - rValues.get(lastClustered.second);
+        return (this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second) +
+                rValues.get(lastClustered.first) - rValues.get(lastClustered.second))/2;
     }
 
     @Override
@@ -48,7 +49,9 @@ public class NeighbourJoining implements Clustering {
                 }
 
             }
-            this.rValues.put(fromNode, ( (1 / nodesInDistanceMatrix.size()-2) * sumOfDistances ));
+            double temp1 = nodesInDistanceMatrix.size() - 2;
+            double fraction = 1 / temp1;
+            this.rValues.put(fromNode, (fraction * sumOfDistances));
         }
 
     }

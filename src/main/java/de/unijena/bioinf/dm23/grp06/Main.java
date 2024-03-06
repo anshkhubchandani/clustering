@@ -23,6 +23,7 @@ public class Main {
             System.out.println("Sequence: " +s.getSequence());
         }*/
 
+        /*
         DistanceMatrix dm = new DistanceMatrix();
         dm.addDistance("A", "B", 2);
         dm.addDistance("A", "C", 5);
@@ -36,6 +37,7 @@ public class Main {
         dm.addToNodeList("D");
         Clustering test = new UPGMA(dm);
 
+
         LabelPair lp1 = test.nextClusterCandidate();
         System.out.println(lp1.getTaxon1() + " " + test.distanceToFirst(lp1) + " "
 
@@ -48,7 +50,34 @@ public class Main {
         LabelPair lp3 = test.nextClusterCandidate();
         System.out.println(lp3.getTaxon1() + " " + test.distanceToFirst(lp3) + " "
                 +  lp3.getTaxon2() + " " + test.distanceToSecond(lp3));
+        */
 
+        DistanceMatrix dm = new DistanceMatrix();
+        dm.addDistance("Mensch", "Maus", 3);
+        dm.addDistance("Mensch", "Rose", 14);
+        dm.addDistance("Mensch", "Tulpe", 12);
+        dm.addDistance("Maus", "Rose", 13);
+        dm.addDistance("Maus", "Tulpe", 11);
+        dm.addDistance("Rose", "Tulpe", 4);
+        dm.addToNodeList("Mensch");
+        dm.addToNodeList("Maus");
+        dm.addToNodeList("Rose");
+        dm.addToNodeList("Tulpe");
+        Clustering test = new NeighbourJoining(dm);
+
+
+        LabelPair lp1 = test.nextClusterCandidate();
+        System.out.println(lp1.getTaxon1() + " " + test.distanceToFirst(lp1) + " "
+
+                +  lp1.getTaxon2() + " " + test.distanceToSecond(lp1));
+        test.updateDistanceMatrix(lp1, lp1.getTaxon1().concat("-").concat(lp1.getTaxon2()));
+        LabelPair lp2 = test.nextClusterCandidate();
+        System.out.println(lp2.getTaxon1() + " " + test.distanceToFirst(lp2) + " "
+                +  lp2.getTaxon2() + " " + test.distanceToSecond(lp2));
+        test.updateDistanceMatrix(lp2, lp2.getTaxon1().concat("-").concat(lp2.getTaxon2()));
+        LabelPair lp3 = test.nextClusterCandidate();
+        System.out.println(lp3.getTaxon1() + " " + test.distanceToFirst(lp3) + " "
+                +  lp3.getTaxon2() + " " + test.distanceToSecond(lp3));
 
 
         // /Users/larry/Git/testfiles/aquifex-tRNA-clean.fasta

@@ -9,23 +9,25 @@ public class ClusteringOptions implements Runnable{
     @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "Prints help message.")
     protected boolean helpRequested;
 
-    @CommandLine.ArgGroup(heading = "User input")
+    @CommandLine.ArgGroup(heading = "User input", exclusive = true)
     Input userInput;
 
     static class Input {
 
-        @CommandLine.ArgGroup(heading = "Input sequence")
+        /* @CommandLine.ArgGroup(heading = "Input sequence")
         InputSequence userInputSequence;
 
         static class InputSequence {
 
             @CommandLine.Option(names = {"-s", "--seq"}, description = "Input sequences to be used.")
             ArrayList<String> inputSeq;
-            // MULTIFASTA
 
             @CommandLine.Option(names = {"-t", "--type"}, description = "Sequence type of input sequences (DNA, RNA, amino acid AA, or ASCII).")
             String sequenceType;
-        }
+        } */
+
+        @CommandLine.Option(names = {"-s", "--seq"}, description = "Input sequences to be used.")
+        ArrayList<String> inputSeq;
 
         @CommandLine.Option(names = {"-m", "--matrix"}, description = "File path of a distance matrix as an input to create a phylogenic tree.")
         String distanceMatrixPath;
@@ -43,6 +45,13 @@ public class ClusteringOptions implements Runnable{
 
     @Override
     public void run() {
+        RequestHandler userRequestHandler;
 
+        if (userInput.inputSeq != null) {
+
+        }
+        else if (userInput.distanceMatrixPath != null) {
+
+        }
     }
 }
