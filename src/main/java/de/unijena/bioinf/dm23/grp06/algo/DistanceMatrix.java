@@ -103,7 +103,7 @@ public class DistanceMatrix {
             System.out.println("ERROR: Distance matrix does not satisfy the triangle inequality.");
             return false;
         }
-        System.out.println("worked");
+        System.out.println("Metric is correct.");
         return true;
     }
     private boolean isSymmetric(){
@@ -155,6 +155,7 @@ public class DistanceMatrix {
     }*/
 
     //test
+    /*
     public static void main(String[] args) throws InvalidDistanceException {
         DistanceMatrix dm = new DistanceMatrix();
         dm.addDistance("A", "B", 1.0);
@@ -164,6 +165,6 @@ public class DistanceMatrix {
         dm.addToNodeList("B");
         dm.addToNodeList("C");
         dm.checkMetric();
-    }
+    } */
 
 }
