@@ -11,8 +11,7 @@ public class TreeBuilder {
     private HashMap<String, Tree> mapOfTrees;
     private final TreeType treeType;
     private final Clustering clusteringMethod;
-    Tree finishedTree;
-    // private boolean finishedBuilding;
+    private Tree finishedTree;
 
     public TreeBuilder (TreeType type, Clustering clusteringAlgorithm, HashMap<String, Sequence> leafLabels) {
         this.mapOfTrees = new HashMap<>();
@@ -111,5 +110,9 @@ public class TreeBuilder {
 
     public HashMap<String, Tree> getMapOfTrees () {
         return this.mapOfTrees;
+    }
+
+    public Tree getFinishedTree () {
+        return this.finishedTree;
     }
 }

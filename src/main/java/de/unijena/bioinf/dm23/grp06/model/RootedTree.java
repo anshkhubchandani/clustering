@@ -15,8 +15,14 @@ public class RootedTree extends AbstractTree {
         super(node);
     }
 
-    protected void setRoot () {
+    private void setRoot () {
         this.root = this.availableNode;
+    }
+
+    @Override
+    public void setAvailableNode (TreeNode node) {
+        this.availableNode = node;
+        setRoot();
     }
 
     @Override
