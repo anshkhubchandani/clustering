@@ -1,12 +1,10 @@
 package de.unijena.bioinf.dm23.grp06.io;
 import de.unijena.bioinf.dm23.grp06.model.Tree;
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.*;
 import java.text.DecimalFormat;
-import java.util.HashMap;
 
 //Reader und Writer fuer FASTA Dateien
 public class NewickWriter {
@@ -17,6 +15,17 @@ public class NewickWriter {
             TreeNode root = tree.getAvailableNode();
             if (root != null) {
                 writeNode(root, writer);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // finished writing, now read the content of the file and print it
+        try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
+            String line;
+            System.out.println("Content of the output file:");
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
