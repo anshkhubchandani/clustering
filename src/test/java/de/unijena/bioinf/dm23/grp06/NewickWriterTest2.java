@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-public class NW {
+public class NewickWriterTest2 {
 
         @Test
         void testWriteTreeToFile() {
