@@ -8,12 +8,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * The DistanceMatrixReader class provides methods for reading distance matrices from files.
+ */
 public class DistanceMatrixReader {
 
-    /**read the file line by line.
-     For each line, split it into three parts: the names of the two taxa and the distance between them.
-     We add this information to the DistanceMatrix object using the addDistance method. **/
-
+    /**
+     * Reads a distance matrix from the specified file path.
+     *
+     * @param filepath the path to the file containing the distance matrix
+     * @return a DistanceMatrix object containing the read matrix
+     * @throws IOException if an I/O error occurs while reading the file
+     */
     public static DistanceMatrix readMyMatrix(Path filepath) throws IOException {
         DistanceMatrix matrix = new DistanceMatrix();
 

@@ -4,7 +4,9 @@ import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.model.*;
 
 import java.util.HashMap;
-
+/**
+ * The TreeBuilder class is responsible for building trees using a specified clustering algorithm.
+ */
 public class TreeBuilder {
 
     private HashMap<String, Sequence> listOfLeafLabels;
@@ -13,6 +15,13 @@ public class TreeBuilder {
     private final Clustering clusteringMethod;
     private Tree finishedTree;
 
+    /**
+     * Constructs a new TreeBuilder with the specified parameters.
+     *
+     * @param type               the type of the tree (rooted or unrooted)
+     * @param clusteringAlgorithm the clustering algorithm to use
+     * @param leafLabels         the labels of the leaf nodes
+     */
     public TreeBuilder (TreeType type, Clustering clusteringAlgorithm, HashMap<String, Sequence> leafLabels) {
         this.mapOfTrees = new HashMap<>();
         this.treeType = type;
@@ -29,6 +38,9 @@ public class TreeBuilder {
         }
     }
 
+    /**
+     * Builds the tree using the specified clustering algorithm.
+     */
     public void buildTree () {
         LabelPair nextCluster;
         String newLabel;
@@ -108,9 +120,20 @@ public class TreeBuilder {
         mapOfTrees.put(firstTree.getAvailableNode().getLabel(), firstTree);
     }
 
+    /**
+     * Returns the map of trees.
+     *
+     * @return the map of trees
+     */
     public HashMap<String, Tree> getMapOfTrees () {
         return this.mapOfTrees;
     }
+
+    /**
+     * Returns the finished tree.
+     *
+     * @return the finished tree
+     */
 
     public Tree getFinishedTree () {
         return this.finishedTree;

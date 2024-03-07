@@ -16,7 +16,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * The RequestHandler class manages the processing of clustering requests from the command line.
+ */
 public class RequestHandler {
     Clustering clusteringAlgorithm;
     TreeBuilder treeBuilder;
@@ -26,6 +28,12 @@ public class RequestHandler {
     String inputType;
     String algorithm;
 
+    /**
+     * Constructs a RequestHandler object with the given algorithm and input sequences.
+     *
+     * @param algorithm   the clustering algorithm to use
+     * @param inputPaths  the paths to input sequences
+     */
     public RequestHandler (String algorithm, ArrayList<String> inputPath) {
         this.algorithm = algorithm;
         this.inputType = "sequences";
@@ -43,7 +51,12 @@ public class RequestHandler {
         }
 
     }
-
+    /**
+     * Constructs a RequestHandler object with the given algorithm and distance matrix path.
+     *
+     * @param algorithm           the clustering algorithm to use
+     * @param distanceMatrixPath  the path to the distance matrix file
+     */
     public RequestHandler (String algorithm, String distanceMatrixPath) {
         this.algorithm = algorithm;
         this.inputType = "distance matrix";

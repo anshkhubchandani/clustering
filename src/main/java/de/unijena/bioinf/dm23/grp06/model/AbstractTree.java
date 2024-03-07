@@ -6,22 +6,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-public abstract class AbstractTree implements Tree {
 
+/**
+ * The AbstractTree class provides a skeletal implementation of the Tree interface.
+ */
+
+public abstract class AbstractTree implements Tree {
     TreeNode availableNode;
     ArrayList<TreeNode> treeNodeList;
     HashMap<String, Sequence> listOfLeafLabels;
-
+    /**
+     * Constructs an AbstractTree with the given available node and list of tree nodes.
+     *
+     * @param available       the available node for the tree
+     * @param nodesOfNewTree  the list of nodes in the tree
+     */
     public AbstractTree (TreeNode available, ArrayList<TreeNode> nodesOfNewTree) {
         this.availableNode = available;
         this.treeNodeList = nodesOfNewTree;
     }
 
+    /**
+     * Constructs an AbstractTree with the given node.
+     *
+     * @param node  the node to be added to the tree
+     */
     public AbstractTree (TreeNode node) {
         this.treeNodeList = new ArrayList<>();
         this.treeNodeList.add(node);
         this.availableNode = this.treeNodeList.get(0);
     }
+
 
     @Override
     public HashMap<String, Sequence> getListOfLeafLabels() {

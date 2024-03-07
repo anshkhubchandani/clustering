@@ -1,40 +1,56 @@
 package de.unijena.bioinf.dm23.grp06.algo;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DistanceMatrix {
-
+    /**
+     * The DistanceMatrix class represents a matrix containing pairwise distances between taxa.
+     */
     private final HashMap<LabelPair, Double> distances;
     private ArrayList<String> nodesInMatrix;
 
+    /**
+     * Constructs a new DistanceMatrix object.
+     */
     public DistanceMatrix() {
         distances = new HashMap<>();
         nodesInMatrix = new ArrayList<>();
     }
-
+    /**
+     * Adds a distance between two taxa to the distance matrix.
+     *
+     * @param taxon1   the first taxon
+     * @param taxon2   the second taxon
+     * @param distance the distance between the taxa
+     * @throws InvalidDistanceException if the provided distance is invalid
+     */
     public void addDistance(String taxon1, String taxon2, double distance) throws InvalidDistanceException {
-        //addToNodeList(taxon1);
-        //addToNodeList(taxon2);
+
         if (Double.isNaN(distance) ||Double.isInfinite(distance)||distance <0){
             throw new InvalidDistanceException("Invalid distance provided: " + distance);
         }
         LabelPair tempTaxon = new LabelPair(taxon1, taxon2);
-        //if (!distances.containsKey(tempTaxon)) {
             distances.put(tempTaxon, distance);
-        //}
-        //else {
-        //    System.err.println("Couldn't add new distance to distance matrix.");
-        //}
+
     }
 
+    /**
+     * Adds a taxon to the list of nodes in the matrix.
+     *
+     * @param taxon the taxon to add
+     */
     public void addToNodeList (String taxon) {
         if (!nodesInMatrix.contains(taxon)) {
             nodesInMatrix.add(taxon);
         }
     }
 
+    /**
+     * Deletes distances involving the specified taxa from the distance matrix.
+     *
+     * @param taxon1 the first taxon
+     * @param taxon2 the second taxon
+     */
     protected void deleteDistances (String taxon1, String taxon2) {
 
         deleteFromNodeList(taxon1);
@@ -52,24 +68,38 @@ public class DistanceMatrix {
         }
 
     }
-    
+    /**
+     * Retrieves the distance between two taxa.
+     *
+     * @param taxon1 the first taxon
+     * @param taxon2 the second taxon
+     * @return the distance between the taxa
+     */
+
     public double getDistance (String taxon1, String taxon2) {
-        old : return taxon1.equals(taxon2) ? 0 : this.distances.get(new LabelPair(taxon1, taxon2));
+       return taxon1.equals(taxon2) ? 0 : this.distances.get(new LabelPair(taxon1, taxon2));
     }
+
+    /**
+     * Retrieves the list of nodes in the matrix.
+     *
+     * @return the list of nodes
+     */
     public ArrayList<String> getNodesInMatrix () {
         return this.nodesInMatrix;
     }
 
+    /**
+     * Deletes distances involving the specified taxa from the distance matrix.
+     *
+     * @param taxon1 the first taxon
+     * @param taxon2 the second taxon
+     */
     private void deleteFromNodeList (String nodeLabel) {
         this.nodesInMatrix.remove(nodeLabel);
     }
 
-    protected LabelPair getMinimumDistancePair () {
-        //hier
-        /*if (distances.isEmpty()){
-            throw new IllegalStateException("The distance map is empty!");
-        }*/
-
+    protected LabelPair getMinimumDistancePair () {//hier
         LabelPair[] allKeys = distances.keySet().toArray(new LabelPair[0]);
         double tempMinDistance = Double.MAX_VALUE;
         LabelPair minNodePair = allKeys[0];
@@ -145,26 +175,23 @@ public class DistanceMatrix {
         return true;
     }
 
+    public void checkConnection() throws MatrixNotConnectedException {
+        for (String node : nodesInMatrix) {
+            boolean connected = false;
+            for (String otherNode : nodesInMatrix) {
+                if (!node.equals(otherNode) && isConnected(node, otherNode)) {
+                    connected = true;
+                    break;
+                }
+            }
+            if (!connected) {
+                throw new MatrixNotConnectedException("Node " + node + " is not connected to any other node.");
+            }
+        }
+    }
 
-    /*protected NodePair getMinimumDistancePair() {
-        return this.minDistancePair;
-    }*/
-
-    /*protected double getMinDistance () {
-        return this.distances.get(this.minDistancePair);
-    }*/
-
-    //test
-    /*
-    public static void main(String[] args) throws InvalidDistanceException {
-        DistanceMatrix dm = new DistanceMatrix();
-        dm.addDistance("A", "B", 1.0);
-        dm.addDistance("B", "C", 2.0);
-        dm.addDistance("A", "C", 3.0);
-        dm.addToNodeList("A");
-        dm.addToNodeList("B");
-        dm.addToNodeList("C");
-        dm.checkMetric();
-    } */
+    private boolean isConnected(String node1, String node2) {
+        return distances.containsKey(new LabelPair(node1, node2)) || distances.containsKey(new LabelPair(node2, node1));
+    }
 
 }

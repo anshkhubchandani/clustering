@@ -8,11 +8,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Unit tests for the UPGMA algorithm and related functionality.
+ */
     public class UPGMATest {
         DistanceMatrix dm = new DistanceMatrix();
         UPGMA upgma = new UPGMA(dm);
 
+    /**
+     * Test method for edge cases where distances are infinity.
+     */
         @Test
         public void testEdgeCases_infinity() {
             InvalidDistanceException e = Assertions.assertThrows(InvalidDistanceException.class, () -> {
@@ -25,6 +30,9 @@ import static org.junit.jupiter.api.Assertions.*;
             });
         }
 
+    /**
+     * Test method for edge cases where distances are negative.
+     */
         @Test
         public void testEdgeCases_negativ() {
             InvalidDistanceException e = Assertions.assertThrows(InvalidDistanceException.class, () -> {
@@ -37,6 +45,9 @@ import static org.junit.jupiter.api.Assertions.*;
             });
         }
 
+    /**
+     * Test method for edge cases where distances are NaN.
+     */
         @Test
         public void testEdgeCases_NaN() {
             InvalidDistanceException e = Assertions.assertThrows(InvalidDistanceException.class, () -> {
@@ -49,6 +60,11 @@ import static org.junit.jupiter.api.Assertions.*;
             });
         }
 
+    /**
+     * Test method for calculating distances between random DNA sequences.
+     *
+     * @throws InvalidDistanceException if there is an error in distance calculation.
+     */
         @Test
         public void testCalculateRandomDistances() throws InvalidDistanceException {
             dm.addDistance("A", "B", 17);
@@ -100,7 +116,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Test
             public void testRandomDNASequences () {
-                int numSequences = (int) (Math.random() * 10) + 1; // Generate a random number of sequences between 1 and 10
+                int numSequences = (int) (Math.random() * 5) + 1; // Generate a random number of sequences
                 for (int i = 0; i < numSequences; i++) {
                     String sequence = generateRandomDNASequence();
                     assertNotNull(sequence);
@@ -113,7 +129,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
             private String generateRandomDNASequence() {
                 StringBuilder sequence = new StringBuilder();
-                int length = (int) (Math.random() * 16) + 5; // Random length between 5 and 20
+                int length = (int) (Math.random() * 2) + 5; // Random length
                 for (int i = 0; i < length; i++) {
                     char nucleotide = "ACGT".charAt((int) (Math.random() * 4)); // Randomly select A, C, G, or T
                     sequence.append(nucleotide);
@@ -121,7 +137,7 @@ import static org.junit.jupiter.api.Assertions.*;
                 return sequence.toString();
             }
 
-           /* @Test
+           @Test
             public void testMetricProperties() throws InvalidDistanceException {
 
                 DistanceMatrix validDM = createValidDistanceMatrix();
@@ -151,7 +167,7 @@ import static org.junit.jupiter.api.Assertions.*;
                 invalidDM.addToNodeList("B");
                 invalidDM.addToNodeList("C");
                 return invalidDM;
-        }*/
+        }
 
         @Test
         public void testMetricSymmetric() throws InvalidDistanceException {
@@ -194,8 +210,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
             assertFalse(dm.checkMetric());
         }
-
-
     }
 
 

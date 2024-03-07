@@ -6,6 +6,9 @@ import picocli.CommandLine;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The ClusteringOptions class represents the command-line options for the clustering application.
+ */
 public class ClusteringOptions implements Runnable{
 
     @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "Prints help message.")
@@ -33,6 +36,9 @@ public class ClusteringOptions implements Runnable{
 
     // Additional options here
 
+    /**
+     * Runs the clustering application.
+     */
     @Override
     public void run() {
         RequestHandler userRequestHandler;
@@ -51,13 +57,21 @@ public class ClusteringOptions implements Runnable{
         }
 
     }
-
+    /**
+     * Writes the result of clustering to an output file if specified.
+     *
+     * @param userRequest the user request handler
+     */
     private void writeInOutput (RequestHandler userRequest) {
         if (this.outputFilePath != null) {
             userRequest.writeTreeToNewick(this.outputFilePath);
         }
     }
-
+    /**
+     * Writes the result of clustering to an output file if specified.
+     *
+     * @param userRequest the user request handler
+     */
     private boolean checkIfCorrectInput () {
         if (this.userInput.inputSeq == null && this.userInput.distanceMatrixPath == null) {
             throw new MissingInputsException("Input sequence or distance matrix required.");

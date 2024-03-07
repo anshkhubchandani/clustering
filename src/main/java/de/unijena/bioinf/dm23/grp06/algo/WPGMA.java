@@ -4,8 +4,17 @@ import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 
 import java.util.ArrayList;
 
+/**
+ * The WPGMA class implements the WPGMA (Weighted Pair Group Method with Arithmetic Mean) algorithm for clustering.
+ * It extends the PairGroupMethods abstract class.
+ */
 public class WPGMA extends PairGroupMethods {
 
+    /**
+     * Constructs a new WPGMA object with the specified distance matrix.
+     *
+     * @param distMatrix the distance matrix
+     */
     public WPGMA (DistanceMatrix distMatrix) {
         super(distMatrix);
     }

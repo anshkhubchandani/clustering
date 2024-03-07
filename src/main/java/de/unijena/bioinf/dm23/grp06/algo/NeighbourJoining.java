@@ -1,15 +1,19 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
-import de.unijena.bioinf.dm23.grp06.model.TreeNode;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * The NeighbourJoining class implements the Clustering interface and provides methods for performing clustering using the Neighbor Joining algorithm.
+ */
 public class NeighbourJoining implements Clustering {
 
     private DistanceMatrix distanceMatrix;
     private HashMap<String, Double> rValues;
-
+    /**
+     * Constructs a new NeighbourJoining object with the specified distance matrix.
+     *
+     * @param distMatrix the distance matrix
+     */
     public NeighbourJoining (DistanceMatrix distMatrix) {
         this.distanceMatrix = distMatrix;
         rValues = new HashMap<>();
@@ -34,7 +38,9 @@ public class NeighbourJoining implements Clustering {
         return this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second)
                 - distanceToFirst;
     }
-
+    /**
+     * Calculates the r-values for each node in the distance matrix.
+     */
     public void calculateRValues () {
 
         double sumOfDistances;
@@ -56,6 +62,11 @@ public class NeighbourJoining implements Clustering {
 
     }
 
+    /**
+     * Calculates the minimum M value for clustering.
+     *
+     * @return the label pair with the minimum M value
+     */
     public LabelPair calculateMinM () {
 
         ArrayList<String> nodesInDistanceMatrix = this.distanceMatrix.getNodesInMatrix();
@@ -89,7 +100,7 @@ public class NeighbourJoining implements Clustering {
                     this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second)) / 2;
             this.distanceMatrix.addDistance(nodeInMatrix, newClusterNode, nodeDistance);
         }catch (InvalidDistanceException e) {
-        System.out.println("Error updating distance matrix" + e.getMessage());
+        System.err.println("Error updating distance matrix" + e.getMessage());
     }
     }
 

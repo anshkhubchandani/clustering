@@ -1,17 +1,32 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
 import java.util.Objects;
-
+/**
+ * The LabelPair class represents a pair of labels.
+ */
 public class LabelPair {
 
     String first;
     String second;
+
+    /**
+     * Constructs a new LabelPair object with the specified labels.
+     *
+     * @param firstTaxon  the first label
+     * @param secondTaxon the second label
+     */
 
     public LabelPair(String firstTaxon, String secondTaxon) {
         this.first = firstTaxon;
         this.second = secondTaxon;
     }
 
+    /**
+     * Checks if the label pair contains a specific taxon.
+     *
+     * @param taxonToCompare the taxon to compare
+     * @return true if the label pair contains the taxon, false otherwise
+     */
     protected boolean containsTaxon (String taxonToCompare) {
         return (this.first.equals(taxonToCompare) || this.second.equals(taxonToCompare));
     }
@@ -44,20 +59,31 @@ public class LabelPair {
         return result1 + result2;
     }
 
+    /**
+     * Gets the first label.
+     *
+     * @return the first label
+     */
     //neu eingefügt von Teammate
-    public String getTaxon2() {
+    public String getTaxon1() {
         return first;
     }
 
-    public void setTaxon2(String taxon2) {
+    public void setTaxon1(String taxon2) {
         this.first = taxon2;
     }
 
-    public String getTaxon1() {
+
+    /**
+     * Gets the second label.
+     *
+     * @return the second label
+     */
+    public String getTaxon2() {
         return second;
     }
 
-    public void setTaxon1(String taxon1) {
+    public void setTaxon2(String taxon1) {
         this.second = taxon1;
     }
 }

@@ -1,22 +1,20 @@
 package de.unijena.bioinf.dm23.grp06;
 
-import de.unijena.bioinf.dm23.grp06.algo.DistanceMatrix;
-import de.unijena.bioinf.dm23.grp06.algo.LabelPair;
-import de.unijena.bioinf.dm23.grp06.algo.UPGMA;
+import de.unijena.bioinf.dm23.grp06.algo.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
-import de.unijena.bioinf.dm23.grp06.algo.NeighbourJoining;
 
 import javax.swing.*;
-/*
 public class NJtest {
-
     DistanceMatrix dm = new DistanceMatrix();
-    // UPGMA upgma = new UPGMA(dm);
+    /**
+     * Tests the calculation of new distances after merging two nodes in the NJ algorithm.
+     * @throws InvalidDistanceException if an invalid distance is encountered.
+     */
     @Test
-    public void testCalculateNewDistances() {
-        DistanceMatrix dm = new DistanceMatrix();
+    public void testCalculateNewDistances() throws InvalidDistanceException {
         dm.addDistance("Mensch", "Maus", 3);
         dm.addDistance("Mensch", "Rose", 14);
         dm.addDistance("Mensch", "Tulpe", 12);
@@ -54,76 +52,51 @@ public class NJtest {
         System.out.println("Expected Distance between Cluster1 and Tulpe: " + expectedDistanceRT);
         System.out.println("Actual Distance between Cluster1 and Tulpe: " + distanceMeMaT);
         assertEquals(expectedDistanceRT, distanceMeMaT, 0.001);
+    }
+    /**
+     * Tests handling of edge cases where distances are infinity.
+     */
+    @Test
+    public void testEdgeCases_infinity() {
+        InvalidDistanceException e = Assertions.assertThrows(InvalidDistanceException.class, () -> {
+            dm.addDistance("A", "C", Double.POSITIVE_INFINITY); // Distance is infinity
+            dm.addDistance("B", "C", Double.NEGATIVE_INFINITY); // Distance is NaN
 
+            dm.addToNodeList("A");
+            dm.addToNodeList("B");
+            dm.addToNodeList("C");
+
+        });
+    }
+
+    /**
+     * Tests handling of edge cases where distances are negative.
+     */
+
+    @Test
+    public void testEdgeCases_negativ() {
+        InvalidDistanceException e = Assertions.assertThrows(InvalidDistanceException.class, () -> {
+            dm.addDistance("A", "C", -1); // Distance is infinity
+            dm.addDistance("B", "C", -2); // Distance is NaN
+
+            dm.addToNodeList("A");
+            dm.addToNodeList("B");
+            dm.addToNodeList("C");
+        });
+    }
+
+    /**
+     * Tests handling of edge cases where distances are NaN.
+     */
+    @Test
+    public void testEdgeCases_NaN() {
+        InvalidDistanceException e = Assertions.assertThrows(InvalidDistanceException.class, () -> {
+            dm.addDistance("A", "C", Double.NaN); // Distance is NaN
+            dm.addDistance("B", "C", -2); // Distance is NaN
+
+            dm.addToNodeList("A");
+            dm.addToNodeList("B");
+            dm.addToNodeList("C");
+        });
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       /* private DistanceMatrix distanceMatrix;
-        private NeighbourJoining neighbourJoining;
-
-        public void setUp() {
-            // Create a new distance matrix and NeighbourJoining instance before each test
-            distanceMatrix = new DistanceMatrix();
-            distanceMatrix.addDistance("A", "B", 3);
-            distanceMatrix.addDistance("A", "C", 4);
-            distanceMatrix.addDistance("B", "C", 5);
-            neighbourJoining = new NeighbourJoining(distanceMatrix);
-        }
-
-        @Test
-        public void testCalculateRValues() {
-            // Call the calculateRValues method
-            neighbourJoining.calculateRValues();
-
-            // Check if rValues are calculated correctly
-            assertEquals(3.5, neighbourJoining.getValues().get("A"));
-            assertEquals(3.5, neighbourJoining.getRValues().get("B"));
-            assertEquals(3.5, neighbourJoining.getRValues().get("C"));
-        }
-
-        @Test
-        public void testCalculateMinM() {
-            neighbourJoining.calculateRValues();
-
-            LabelPair minMPair = neighbourJoining.calculateMinM();
-
-            // Check if the minimum M value and corresponding pair are correct
-            assertEquals(0.5, neighbourJoining.distanceToFirst(minMPair));
-            assertEquals(1.5, neighbourJoining.distanceToSecond(minMPair));
-        }
-
-        @Test
-        public void testUpdateDistanceMatrix() {
-            // Calculate rValues first
-            neighbourJoining.calculateRValues();
-
-            // Call the calculateMinM method to get the next cluster candidate
-            LabelPair minMPair = neighbourJoining.calculateMinM();
-
-            // Call the updateDistanceMatrix method with the new cluster node
-            neighbourJoining.updateDistanceMatrix(minMPair, "AB");
-
-            // Check if distances are updated correctly in the distance matrix
-            assertEquals(3.0, distanceMatrix.getDistance("AB", "C"));
-            assertEquals(3.5, distanceMatrix.getDistance("A", "AB"));
-            assertEquals(3.5, distanceMatrix.getDistance("B", "AB"));
-            assertNull(distanceMatrix.getDistance("A", "B")); // Check if old distances are removed
-        }
-
-        // Add more test cases to cover edge cases, such as empty distance matrix or special input values*/
-
-
-

@@ -9,9 +9,19 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-//Reader und Writer fuer FASTA Dateien
+/** The NewickWriter class provides methods for writing trees in Newick format to files
+ *
+ */
 public class NewickWriter {
     private static final DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+    /**
+     * Writes the tree in Newick format to the specified file path.
+     *
+     * @param tree      the tree to write
+     * @param labelMap  a map containing labels and corresponding sequences
+     * @param filepath  the path to the output file
+     */
 
     public static void writeTreeToFile(Tree tree, HashMap<String, Sequence> labelMap , String filepath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))) {

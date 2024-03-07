@@ -1,7 +1,17 @@
 package de.unijena.bioinf.dm23.grp06.cli;
 
 import picocli.CommandLine;
+
+/**
+ * The CLMain class is the entry point for the command-line interface (CLI) application.
+ */
 public class CLMain {
+    /**
+     * The main method of the CLI application.
+     *
+     * @param args the command-line arguments
+     */
+
 
     public static void main (String[] args) {
 

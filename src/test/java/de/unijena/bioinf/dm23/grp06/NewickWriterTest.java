@@ -17,7 +17,15 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Test cases for the {@link NewickWriter} class.
+ */
 public class NewickWriterTest {
+
+    /**
+     * Tests the {@link NewickWriter#writeTreeToFile(Tree, HashMap, String)} method
+     * with a simple tree structure.
+     */
     @Test
     void testWriteSimpleTreeToFile() {
         // Create a simple tree with three leaf nodes
@@ -80,8 +88,12 @@ public class NewickWriterTest {
         }
     }
 
+    /**
+     * Tests the {@link NewickWriter#writeTreeToFile(Tree, HashMap, String)} method
+     * with a more complex tree structure.
+     */
     @Test
-    void test2() {
+    void testWriteComplexTreeToFile() {
         // Create a simple tree with three leaf nodes
         TreeNode leaf1 = new TreeNode("A", true);
         TreeNode leaf2 = new TreeNode("B", true);

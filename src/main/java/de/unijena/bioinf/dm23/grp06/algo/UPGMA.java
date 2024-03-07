@@ -1,14 +1,17 @@
 package de.unijena.bioinf.dm23.grp06.algo;
-
-import de.unijena.bioinf.dm23.grp06.model.TreeNode;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+/**
+ * The UPGMA class implements the UPGMA (Unweighted Pair Group Method with Arithmetic Mean) algorithm for clustering.
+ * It extends the PairGroupMethods abstract class.
+ */
 public class UPGMA extends PairGroupMethods {
 
+    /**
+     * Constructs a new UPGMA object with the specified distance matrix.
+     *
+     * @param distMatrix the distance matrix
+     */
     public UPGMA (DistanceMatrix distMatrix) {
         super(distMatrix);
     }
@@ -35,7 +38,12 @@ public class UPGMA extends PairGroupMethods {
         this.distanceMatrix.addToNodeList(newClusterNode);
     }
 
-
+    /**
+     * Calculates the number of clusters a node belongs to.
+     *
+     * @param node the node label
+     * @return the number of clusters the node belongs to
+     */
     private int numberOfCluster (String node) {
        return node.split("-").length;
 
