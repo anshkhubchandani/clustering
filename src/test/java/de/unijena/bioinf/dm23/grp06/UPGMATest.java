@@ -121,7 +121,7 @@ import static org.junit.jupiter.api.Assertions.*;
                 return sequence.toString();
             }
 
-            @Test
+           /* @Test
             public void testMetricProperties() throws InvalidDistanceException {
 
                 DistanceMatrix validDM = createValidDistanceMatrix();
@@ -151,7 +151,51 @@ import static org.junit.jupiter.api.Assertions.*;
                 invalidDM.addToNodeList("B");
                 invalidDM.addToNodeList("C");
                 return invalidDM;
+        }*/
+
+        @Test
+        public void testMetricSymmetric() throws InvalidDistanceException {
+            dm.addDistance("A", "B", 1.0);
+            dm.addDistance("B", "A", 1.0);
+            dm.addToNodeList("A");
+            dm.addToNodeList("B");
+            assertTrue(dm.checkMetric());
         }
+        @Test
+        public void testMetricPositiveDefinite() throws InvalidDistanceException {
+            dm.addDistance("A", "B", 1.0);
+            dm.addDistance("A", "C", 2.0);
+            dm.addDistance("B", "C", 3.0);
+            dm.addToNodeList("A");
+            dm.addToNodeList("B");
+            dm.addToNodeList("C");
+
+            assertTrue(dm.checkMetric());
+        }
+        @Test
+        public void testMetricTriangleInequality() throws InvalidDistanceException {
+            dm.addDistance("A", "B", 5.0);
+            dm.addDistance("A", "C", 4.0);
+            dm.addDistance("B", "C", 2.0);
+            dm.addToNodeList("A");
+            dm.addToNodeList("B");
+            dm.addToNodeList("C");
+
+            assertTrue(dm.checkMetric());
+        }
+        @Test
+        public void testMetricFailure() throws InvalidDistanceException {
+            dm.addDistance("A", "B", 1.0);
+            dm.addDistance("B", "C", 2.0);
+            dm.addDistance("C", "A", 4.0); // Violates symmetry
+            dm.addToNodeList("A");
+            dm.addToNodeList("B");
+            dm.addToNodeList("C");
+
+            assertFalse(dm.checkMetric());
+        }
+
+
     }
 
 
