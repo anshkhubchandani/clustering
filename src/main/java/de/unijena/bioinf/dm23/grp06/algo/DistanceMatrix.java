@@ -1,6 +1,8 @@
 package de.unijena.bioinf.dm23.grp06.algo;
 
 
+import de.unijena.bioinf.dm23.grp06.io.IllegalMetricException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -97,7 +99,26 @@ public class DistanceMatrix {
         }
         return minNodePair;
     }
-
+//    public boolean checkMetric () {
+//        if(distances.isEmpty()){
+//            throw new IllegalMetricException("ERROR: Distance matrix is null");
+//        }
+//        //Symmetrie
+//        if (!isSymmetric()){
+//            throw new IllegalMetricException("ERROR: Distance matrix is not symmetric.");
+//        }
+//        //Positive Definitheit
+//        if(!isPositiveDefinite()){
+//            throw new IllegalMetricException("ERROR: Distance matrix is not positive definite.");
+//        }
+//        //Dreiecksungleichung
+//        if(!satisfiesTriangleInequality()){
+//            throw new IllegalMetricException("ERROR: Distance matrix does not satisfy the triangle inequality.");
+//        }
+//        System.out.println("worked");
+//        return true;
+//    }
+    //ALT
     public boolean checkMetric () {
         if(distances.isEmpty()){
             System.out.println("ERROR: Distance matrix is null");
@@ -118,7 +139,7 @@ public class DistanceMatrix {
             System.out.println("ERROR: Distance matrix does not satisfy the triangle inequality.");
             return false;
         }
-        System.out.println("worked");
+        System.out.println("Metric is correct.");
         return true;
     }
     private boolean isSymmetric(){

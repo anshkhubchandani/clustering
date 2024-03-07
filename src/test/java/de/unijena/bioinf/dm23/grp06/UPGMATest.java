@@ -1,6 +1,7 @@
 package de.unijena.bioinf.dm23.grp06;
 
 import de.unijena.bioinf.dm23.grp06.algo.*;
+import de.unijena.bioinf.dm23.grp06.io.IllegalMetricException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
@@ -119,10 +120,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
         @Test
         void testMetricProperties () {
-
+            System.out.println("First: ");
             DistanceMatrix validDM = createValidDistanceMatrix();
             assertTrue(validDM.checkMetric(), "Valid matrix");
 
+            System.out.println("Second: ");
             DistanceMatrix invalidDM = createInvalidDistanceMatrix();
             assertFalse(invalidDM.checkMetric(), "Invalid Matrix");
         }
@@ -130,17 +132,20 @@ import static org.junit.jupiter.api.Assertions.*;
         private DistanceMatrix createValidDistanceMatrix() {
             DistanceMatrix validDM = new DistanceMatrix();
             validDM.addDistance("A", "B", 1.0);
-            validDM.addDistance("A", "C", 2.0);
             validDM.addDistance("B", "C", 3.0);
+            validDM.addDistance("A", "C", 2.0);
+            validDM.checkMetric();
             return validDM;
 
         }
+
         private DistanceMatrix createInvalidDistanceMatrix() {
             DistanceMatrix invalidDM = new DistanceMatrix();
             invalidDM.addDistance("A", "B", 1.0);
-            invalidDM.addDistance("B", "C", 3.0); // Violates triangle inequality???
-            //invalidDM.addDistance("A", "C", 5.0);
+            invalidDM.addDistance("B", "C", 3.0);
+            invalidDM.addDistance("A", "C", 5.0); // Violates triangle inequality
             return invalidDM;
+
         }
     }
 
