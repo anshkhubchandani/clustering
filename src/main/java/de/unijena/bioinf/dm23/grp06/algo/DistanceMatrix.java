@@ -132,7 +132,7 @@ public class DistanceMatrix {
                         double dist12 = distances.getOrDefault(new LabelPair(taxon1, taxon2), 0.0); //Distanz wird auf 0 gesetzt, wenn keine Distanz vorliegt
                         double dist13 = distances.getOrDefault(new LabelPair(taxon1, taxon3), 0.0);
                         double dist23 = distances.getOrDefault(new LabelPair(taxon2, taxon3), 0.0);
-                        // |a| + |b| >= |c| <- Korrekt 
+                        // |a| + |b| >= |c| <- Korrekt
 
                        //das problem ist hier!!
                         if (dist12 + dist23 < dist13 || dist12 + dist13 < dist23 || dist13 + dist23 < dist12) {
