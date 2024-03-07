@@ -3,7 +3,7 @@ package de.unijena.bioinf.dm23.grp06.cli;
 import de.unijena.bioinf.dm23.grp06.algo.*;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.NeedlemanWunsch;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.Scorer;
-import de.unijena.bioinf.dm23.grp06.exactsearch.io.Fasta;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.io.DistanceMatrixReader;
 import de.unijena.bioinf.dm23.grp06.io.FastaReader;
@@ -16,39 +16,56 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RequestHandler {
-    String algo;
     Clustering clusteringAlgorithm;
-    private FastaReader fastaReader;
     TreeBuilder treeBuilder;
-    DistanceMatrix distanceMatrix;
     ArrayList<Sequence> inputSequences;
     HashMap<String, Sequence> sequenceLabels;
+    TreeType treeType;
+    String inputType;
+    String algorithm;
 
-    public RequestHandler (String algorithm, ArrayList<String> inputPath, TreeType type, FastaReader fastaReader) throws IOException{
-        this.algo = algorithm;
+    public RequestHandler (String algorithm, ArrayList<String> inputPath) {
+        this.algorithm = algorithm;
+        this.inputType = "sequences";
+
         readAllInputSequences(inputPath);
-        // TODO
-        /*
-        - Distanzmatrix machen (Alignments, dann alles zu dm adden)
-        - Treebuilder erstellen
-        - Clustering algo erstellen
-        - letzten beiden Punkte vllt in getrennter Methode, die auch vom anderen Konstruktor aufgerufen werden kann?
-         */
-        // setClusteringAlgorithm(algorithm, distanceMatrix);
+        assignLabelsToSequences();
+        DistanceMatrix dm = createDistancematrix(createAlignments());
+
+        if (dm.checkMetric()) {
+            createClusteringAndTreeBuilder(algorithm, dm);
+            treeBuilder.buildTree();
+        }
+        else {
+            throw new IllegalArgumentException("The distance matrix is not a metric.");
+        }
+
     }
 
-    public RequestHandler (String algorithm, String distanceMatrixPath, TreeType type) {
+    public RequestHandler (String algorithm, String distanceMatrixPath) {
+        this.algorithm = algorithm;
+        this.inputType = "distance matrix";
+
         DistanceMatrix dm = readMatrix(distanceMatrixPath);
-        setClusteringAlgorithm(algorithm, readMatrix(distanceMatrixPath));
-        // Wo kommen die LeafLabels her, wenn es keine Input Sequenzen gibt ohje ohje...
-        // TODO
-        // this.algo = algorithm;
 
+        if (dm.checkMetric()) {
+            createLabelHashMapFromMatrix(dm);
+            createClusteringAndTreeBuilder(algorithm, dm);
+            treeBuilder.buildTree();
+        }
+        else {
+            throw new IllegalArgumentException("The input distance matrix is not a metric.");
+        }
     }
 
-    private void readAllInputSequences (ArrayList<String> inputPaths) throws IOException {
-        for (String path : inputPaths) {
-            this.inputSequences.addAll(readFastaFromFile(Paths.get(path)));
+    private void readAllInputSequences (ArrayList<String> inputPaths) {
+        try {
+            for (String path : inputPaths) {
+                this.inputSequences.addAll(readFastaFromFile(Paths.get(path)));
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -72,38 +89,67 @@ public class RequestHandler {
         return dm;
     }
 
-    private void connectSequencesToLabels (ArrayList<Sequence> sequences) {
+    private void assignLabelsToSequences () {
         String label;
         sequenceLabels = new HashMap<>();
-        for (int i = 1; i <= sequences.size(); i++) {
+        for (int i = 1; i <= this.inputSequences.size(); i++) {
             label = "Seq" + i;
-            sequenceLabels.put(label, sequences.get(i-1));
+            sequenceLabels.put(label, this.inputSequences.get(i-1));
         }
     }
 
-    private void createAlignments (ArrayList<Sequence> inputSequences) {
+    private void createLabelHashMapFromMatrix (DistanceMatrix dm) {
+        ArrayList<String> nodesInMatrix = dm.getNodesInMatrix();
+        int i = 1;
+        for (String s : nodesInMatrix) {
+            this.sequenceLabels.put(s, new AsciiSequence("Unknown Sequence", ("Inputnode" + i)));
+            i++;
+        }
+    }
+
+    private ArrayList<NeedlemanWunsch<Sequence>> createAlignments () {
         // globales Alignment
 
         ArrayList<NeedlemanWunsch<Sequence>> alignmentObjects = new ArrayList<>();
         Scorer scorer = new Scorer();
         int k = 0;
 
-        for (int i = 0; i < inputSequences.size(); i++) {
-            for (int j = k; j < inputSequences.size(); j++) {
+        for (int i = 0; i < this.inputSequences.size(); i++) {
+            for (int j = k; j < this.inputSequences.size(); j++) {
                 if (!(i == j)) {
                     alignmentObjects.add(new NeedlemanWunsch<>(inputSequences.get(i), inputSequences.get(k), scorer));
                 }
             }
             k++;
         }
+        return alignmentObjects;
     }
 
-    private void createDistancematrix (ArrayList<NeedlemanWunsch<Sequence>> alignerObjects) {
+    private DistanceMatrix createDistancematrix (ArrayList<NeedlemanWunsch<Sequence>> alignerObjects) {
         DistanceMatrix dm = new DistanceMatrix();
+        HashMap<String, Sequence> leafLabels;
+        String firstLabel;
+        String secondLabel;
+
         for (NeedlemanWunsch<Sequence> a : alignerObjects) {
-            // TODO !!!
+
+            firstLabel = lookForLabel(a.getSequence1().getName());
+            secondLabel = lookForLabel(a.getSequence2().getName());
+            dm.addDistance(firstLabel, secondLabel, a.linearScore());
 
         }
+        return dm;
+    }
+
+    private String lookForLabel (String sequenceHeader) {
+        String[] keys = this.sequenceLabels.keySet().toArray(new String[0]);
+
+        for (String key : keys) {
+            if (this.sequenceLabels.get(key).getName().equals(sequenceHeader)) {
+                return key;
+            }
+        }
+        return null;
     }
 
     private void setClusteringAlgorithm (String algorithm, DistanceMatrix distanceMatrix) {
@@ -111,17 +157,40 @@ public class RequestHandler {
             clusteringAlgorithm = new UPGMA(distanceMatrix);
         } else if (algorithm.equals("WPGMA")) {
             clusteringAlgorithm = new WPGMA(distanceMatrix);
-        } else if (algorithm.equals("NeighbourJoining")){
+        } else if (algorithm.equals("NJ")){
             clusteringAlgorithm = new NeighbourJoining(distanceMatrix);
         }
     }
 
-    private void createTreeBuilder (HashMap<String, Sequence> leafLabels, TreeType type) {
-        // TreeBuilder initialisieren
-        TreeBuilder treeBuilder = new TreeBuilder(type, clusteringAlgorithm, leafLabels);
+    private void createTreeBuilder () {
+        this.treeBuilder = new TreeBuilder(this.treeType, clusteringAlgorithm, this.sequenceLabels);
     }
 
-    protected void writeTreeToNewick () {
+    protected void writeTreeToNewick (String outputFilePath) {
+        if (this.treeBuilder.isFinishedBuilding()) {
 
+        }
+    }
+
+    private void setTreeType (String algo) {
+        if (algo.equals("UPGMA") || algo.equals("WPGMA")) {
+            this.treeType = TreeType.ROOTED;
+        }
+        else if (algo.equals("NJ")) {
+            this.treeType = TreeType.UNROOTED;
+        }
+    }
+
+    private void createClusteringAndTreeBuilder (String algorithm, DistanceMatrix dm) {
+        setTreeType(algorithm);
+        setClusteringAlgorithm(algorithm, dm);
+        createTreeBuilder();
+    }
+
+    protected void printInfo () {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Algorithm: ").append(this.algorithm).append("\n");
+        sb.append("Input type: ").append(this.inputType).append("\n");
+        sb.append(this.sequenceLabels.size()).append(" sequences in total.\n");
     }
 }

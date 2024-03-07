@@ -65,6 +65,9 @@ public class ClusteringOptions implements Runnable{
         else if (this.method == null) {
             throw new MissingInputsException("Clustering algorithm required.");
         }
+        else if (this.outputFilePath == null) {
+            throw new MissingInputsException("File name or path of output file required.");
+        }
         return true;
     }
 }
