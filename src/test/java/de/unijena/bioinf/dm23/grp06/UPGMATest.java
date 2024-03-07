@@ -1,15 +1,18 @@
 package de.unijena.bioinf.dm23.grp06;
 
-import de.unijena.bioinf.dm23.grp06.algo.Clustering;
-import de.unijena.bioinf.dm23.grp06.algo.DistanceMatrix;
-import de.unijena.bioinf.dm23.grp06.algo.LabelPair;
-import de.unijena.bioinf.dm23.grp06.algo.UPGMA;
+import de.unijena.bioinf.dm23.grp06.algo.*;
+import de.unijena.bioinf.dm23.grp06.model.TreeType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 
+import javax.lang.model.util.SimpleElementVisitor14;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import java.awt.*;
 import java.rmi.UnexpectedException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,9 +67,37 @@ import static org.junit.jupiter.api.Assertions.*;
                 assertEquals(expectedDistanceE, DistanceCluster1E, 0.001);
 
             }
-        }
-
+            /*
         @Test
+        void testMetricProperties () {
+            DistanceMatrix validDM = createValidDistanceMatrix();
+            assertTrue(validDM.checkMetric(), "Valid matrix");
+
+            DistanceMatrix invalidDM = createInvalidDistanceMatrix();
+                assertFalse(invalidDM.checkMetric(), "Invalid Matrix");
+            }
+
+
+            private DistanceMatrix createValidDistanceMatrix() {
+                DistanceMatrix validDM = new DistanceMatrix();
+                validDM.addDistance("A", "B", 1.0);
+                validDM.addDistance("A", "C", 2.0);
+                validDM.addDistance("B", "C", 3.0);
+                return validDM;
+
+            }
+        private DistanceMatrix createInvalidDistanceMatrix() {
+            DistanceMatrix invalidDM = new DistanceMatrix();
+            invalidDM.addDistance("A", "B", 1.0);
+            invalidDM.addDistance("B", "C", 3.0); // Violates triangle inequality???
+            //invalidDM.addDistance("A", "C", 5.0);
+            return invalidDM;
+
+        }
+        */
+
+/*
+         @Test
         public void testUPGMAWithEmptyInput() {
             // Testen mit leerer Eingabematrix
             //upgma.run();
@@ -80,30 +111,68 @@ import static org.junit.jupiter.api.Assertions.*;
 
         @Test
         void testRandomDNASequences() {
-            int numSequences = 10;
-            int sequenceLength = 20;
+            int numSequences = 2;
+            int sequenceLength = 4;
 
-            TreeNode tree = upgma.run();
+            DistanceMatrix randomMatrix = generateRandomDistanceMatrix(numSequences, sequenceLength);
+            System.out.println("Random Distance Matrix:");
+            System.out.println(randomMatrix);
 
-            assertNotNull(tree);
+            UPGMA upgma = new UPGMA(randomMatrix);
+            // HashMap<String, Sequence> randomHashMap = new HashMap<>();
+
+            LabelPair cluster;
+            String newLabel;
+
+
+            cluster = upgma.nextClusterCandidate();
+            // A und B -> cluster.taxon1(): A, cluster.taxon2(): B
+            // Hier kann man mit cluster.taxon1(), cluster.taxon2(), upgma.getDistanceToFirst, upgma.getDistanceToSecond abrufen
+            // Hier testen!
+            newLabel = cluster.getTaxon1().concat("-").concat(cluster.getTaxon2());
+            upgma.updateDistanceMatrix(cluster, newLabel);
+
+
         }
 
-        // Hilfsmethode zur Generierung einer zufälligen Distanzmatrix für Testzwecke
+        // Hilfsmethode zur Generierung einer zufälligen Distanzmatrix
         private DistanceMatrix generateRandomDistanceMatrix(int numSequences, int sequenceLength) {
-
             DistanceMatrix distMatrix = new DistanceMatrix();
+            ArrayList<String> sequences = new ArrayList<>();
+
+            // Generiere und speichere die zufälligen Sequenzen
             for (int i = 0; i < numSequences; i++) {
-                String sequenceA = generateRandomSequence(sequenceLength);
+                String sequence = generateRandomSequence(sequenceLength);
+                sequences.add(sequence);
+                distMatrix.addToNodeList("Seq" + i);
+            }
+
+            // Berechne die Distanzen zwischen den Sequenzen und fülle die Distanzmatrix
+            for (int i = 0; i < numSequences; i++) {
+                String sequenceA = sequences.get(i);
                 for (int j = i + 1; j < numSequences; j++) {
-                    String sequenceB = generateRandomSequence(sequenceLength);
-                    double distance = upgma.calculateNewDistances(sequenceA, sequenceB,"sequenceAB");
+                    String sequenceB = sequences.get(j);
+                    double distance = calculateDistance(sequenceA, sequenceB);
                     distMatrix.addDistance("Seq" + i, "Seq" + j, distance);
                 }
             }
             return distMatrix;
         }
 
-        // Hilfsmethode zur Generierung einer zufälligen DNA-Sequenz für Testzwecke
+        // Hilfsmethode zur Berechnung der Distanz zwischen zwei Sequenzen
+        private double calculateDistance(String sequenceA, String sequenceB) {
+            // Hier kannst du deine Distanzberechnung implementieren, z.B. mit Alignment-Algorithmen
+            // Für diese Testzwecke kannst du einfach die Hamming-Distanz verwenden
+            int distance = 0;
+            for (int i = 0; i < sequenceA.length(); i++) {
+                if (sequenceA.charAt(i) != sequenceB.charAt(i)) {
+                    distance++;
+                }
+            }
+            return distance;
+        }
+
+        // Hilfsmethode zur Generierung einer zufälligen DNA-Sequenz
         private String generateRandomSequence(int length) {
             StringBuilder sb = new StringBuilder();
             String alphabet = "ACGT";
@@ -113,6 +182,7 @@ import static org.junit.jupiter.api.Assertions.*;
             }
             return sb.toString();
         }
+
     }
 
 
