@@ -1,10 +1,7 @@
 package de.unijena.bioinf.dm23.grp06.io;
 
 import de.unijena.bioinf.dm23.grp06.algo.DistanceMatrix;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.InvalidCharactersException;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.NucleotideSequence;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.*;
 import de.unijena.bioinf.dm23.grp06.model.Tree;
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 
@@ -53,7 +50,7 @@ public class FastaReader {
                         sequences.add(new AminoacidSequence(sequence, sequenceName));
                     }
                     else if (isAsciiSequence(sequence)) {
-                        sequences.add(new AminoacidSequence(sequence, sequenceName));
+                        sequences.add(new AsciiSequence(sequence, sequenceName));
                     }else {
                         throw new InvalidCharactersException("ERROR: The given sequence contains invalid characters.");
                     }
