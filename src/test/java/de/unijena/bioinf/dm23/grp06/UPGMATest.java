@@ -1,20 +1,8 @@
 package de.unijena.bioinf.dm23.grp06;
 
 import de.unijena.bioinf.dm23.grp06.algo.*;
-import de.unijena.bioinf.dm23.grp06.model.TreeType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import de.unijena.bioinf.dm23.grp06.model.TreeNode;
-
-import javax.lang.model.util.SimpleElementVisitor14;
-import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
-import java.awt.*;
-import java.rmi.UnexpectedException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.*;
 
     public class UPGMATest {
