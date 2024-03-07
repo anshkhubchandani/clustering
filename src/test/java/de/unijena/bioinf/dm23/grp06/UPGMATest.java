@@ -98,8 +98,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
         }
 
-/*
-            @Test
+@Test
             public void testRandomDNASequences () {
                 int numSequences = (int) (Math.random() * 10) + 1; // Generate a random number of sequences between 1 and 10
                 for (int i = 0; i < numSequences; i++) {
@@ -147,7 +146,7 @@ import static org.junit.jupiter.api.Assertions.*;
                 invalidDM.addDistance("B", "C", 3.0); // Violates triangle inequality???
                 //invalidDM.addDistance("A", "C", 5.0);
                 return invalidDM;
-        }*/
+        }
     }
 
 
