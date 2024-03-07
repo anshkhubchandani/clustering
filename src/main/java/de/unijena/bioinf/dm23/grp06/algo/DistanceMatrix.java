@@ -52,7 +52,23 @@ public class DistanceMatrix {
     }
     
     public double getDistance (String taxon1, String taxon2) {
-        return taxon1.equals(taxon2) ? 0 : this.distances.get(new LabelPair(taxon1, taxon2));
+        //old : return taxon1.equals(taxon2) ? 0 : this.distances.get(new LabelPair(taxon1, taxon2));
+        //ANSH PROBIER WIEDER VERZWIFELT
+        LabelPair pair = new LabelPair(taxon1, taxon2);
+        if (distances.containsKey(pair)) {
+            double distance = distances.get(pair);
+            // Check if the distance is infinity
+            if (Double.isInfinite(distance)) {
+                return Double.POSITIVE_INFINITY;
+            } else {
+                return distance;
+            }
+        } else {
+            // Handle case where distance is not available
+            // For example, you can return a default value or throw an exception
+            // For illustration, let's return Double.NaN to indicate that the distance is not available
+            return Double.NaN;
+        }
     }
     public ArrayList<String> getNodesInMatrix () {
         return this.nodesInMatrix;
