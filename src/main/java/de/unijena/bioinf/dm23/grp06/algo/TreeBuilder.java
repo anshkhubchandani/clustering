@@ -11,6 +11,7 @@ public class TreeBuilder {
     private HashMap<String, Tree> mapOfTrees;
     private final TreeType treeType;
     private final Clustering clusteringMethod;
+    Tree finishedTree;
     // private boolean finishedBuilding;
 
     public TreeBuilder (TreeType type, Clustering clusteringAlgorithm, HashMap<String, Sequence> leafLabels) {
@@ -42,9 +43,9 @@ public class TreeBuilder {
             this.clusteringMethod.updateDistanceMatrix(nextCluster, newLabel);
         }
 
-        if (this.treeType.equals(TreeType.UNROOTED)) {
-            
-        }
+        String[] keys = this.mapOfTrees.keySet().toArray(new String[0]);
+        this.finishedTree = mapOfTrees.get(keys[0]);
+        this.finishedTree.setListOfLeafLabels(this.listOfLeafLabels);
     }
 
     private void connectTrees (LabelPair nextCluster, String newLabel, double distanceToFirst, double distanceToSecond) {
@@ -105,5 +106,9 @@ public class TreeBuilder {
         firstTree.addNodesFromList(secondTree.getNodeList());
 
         mapOfTrees.put(firstTree.getAvailableNode().getLabel(), firstTree);
+    }
+
+    public HashMap<String, Tree> getMapOfTrees () {
+        return this.mapOfTrees;
     }
 }

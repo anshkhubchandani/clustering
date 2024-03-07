@@ -14,4 +14,5 @@ public interface Tree {
     void addNodesFromList (ArrayList<TreeNode> newNodes);
     void addNode(TreeNode node);
     HashMap<String, Sequence> getListOfLeafLabels ();
+    void setListOfLeafLabels(HashMap<String, Sequence> listOfLeafLabels);
 }
