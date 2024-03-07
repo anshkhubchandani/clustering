@@ -54,4 +54,8 @@ public abstract class AbstractTree implements Tree {
         return availableNode;
     }
 
+    @Override
+    public void setListOfLeafLabels(HashMap<String, Sequence> listOfLeafLabels) {
+        this.listOfLeafLabels = listOfLeafLabels;
+    }
 }
