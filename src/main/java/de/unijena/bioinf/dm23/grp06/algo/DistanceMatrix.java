@@ -97,7 +97,6 @@ public class DistanceMatrix {
         return minNodePair;
     }
 
-    //TODO
     public boolean checkMetric () {
         if(distances.isEmpty()){
             System.out.println("ERROR: Distance matrix is null");
@@ -118,6 +117,7 @@ public class DistanceMatrix {
             System.out.println("ERROR: Distance matrix does not satisfy the triangle inequality.");
             return false;
         }
+        System.out.println("worked");
         return true;
     }
     private boolean isSymmetric(){
@@ -142,15 +142,17 @@ public class DistanceMatrix {
             for (String taxon2 : nodesInMatrix) {
                 for (String taxon3 : nodesInMatrix) {
 
-                    if (!taxon1.equals(taxon2) && !taxon2.equals(taxon3) && !taxon1.equals(taxon3)) {
+                   if (!taxon1.equals(taxon2) && !taxon2.equals(taxon3) && !taxon1.equals(taxon3)) {
                         double dist12 = distances.getOrDefault(new LabelPair(taxon1, taxon2), 0.0); //Distanz wird auf 0 gesetzt, wenn keine Distanz vorliegt
                         double dist13 = distances.getOrDefault(new LabelPair(taxon1, taxon3), 0.0);
                         double dist23 = distances.getOrDefault(new LabelPair(taxon2, taxon3), 0.0);
                         // |a| + |b| >= |c|
+
                         if (dist12 + dist23 < dist13 || dist12 + dist13 < dist23 || dist13 + dist23 < dist12) {
+
                             return false;
                         }
-                    }
+                   }
                 }
             }
         }
@@ -167,12 +169,15 @@ public class DistanceMatrix {
     }*/
 
     //test
-//    public static void main(String[] args) {
-//        DistanceMatrix distanceMatrix = new DistanceMatrix();
-//        distanceMatrix.addDistance("Taxon1", "Taxon2", 1.0);
-//        distanceMatrix.addDistance("Taxon1", "Taxon2", 2.0);
-//        distanceMatrix.addDistance("Taxon1", "Taxon2", 5.0);
-//        distanceMatrix.checkMetric();
-//    }
+    public static void main(String[] args) {
+        DistanceMatrix dm = new DistanceMatrix();
+        dm.addDistance("A", "B", 1.0);
+        dm.addDistance("B", "C", 2.0);
+        dm.addDistance("A", "C", 3.0);
+        dm.addToNodeList("A");
+        dm.addToNodeList("B");
+        dm.addToNodeList("C");
+        dm.checkMetric();
+    }
 
 }
