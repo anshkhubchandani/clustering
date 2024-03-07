@@ -4,6 +4,7 @@ import de.unijena.bioinf.dm23.grp06.algo.*;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.io.FastaReader;
 import de.unijena.bioinf.dm23.grp06.io.NewickWriter;
+import de.unijena.bioinf.dm23.grp06.model.RootedTree;
 import de.unijena.bioinf.dm23.grp06.model.Tree;
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 import de.unijena.bioinf.dm23.grp06.model.TreeType;
@@ -98,6 +99,13 @@ public class Main {
         TreeNode root = new TreeNode("Root",false); // Root
         root.setFirstConnectedNode(internal1, 0.3);
         root.setSecondConnectedNode(leaf3, 0.4);
+
+        ArrayList<TreeNode> listOfNodes = new ArrayList<>();
+        listOfNodes.add(leaf1);
+        listOfNodes.add(leaf2);
+        listOfNodes.add(leaf3);
+        listOfNodes.add(internal1);
+        listOfNodes.add(root);
 
         // Create a sample label map
         HashMap<String, String> labelMap = new HashMap<>();

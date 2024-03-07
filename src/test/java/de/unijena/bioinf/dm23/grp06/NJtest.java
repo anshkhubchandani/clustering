@@ -2,6 +2,7 @@ package de.unijena.bioinf.dm23.grp06;
 
 import de.unijena.bioinf.dm23.grp06.algo.DistanceMatrix;
 import de.unijena.bioinf.dm23.grp06.algo.LabelPair;
+import de.unijena.bioinf.dm23.grp06.algo.UPGMA;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;

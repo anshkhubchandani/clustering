@@ -7,6 +7,10 @@ import de.unijena.bioinf.dm23.grp06.algo.UPGMA;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
+
+import java.awt.*;
+import java.rmi.UnexpectedException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
     public class UPGMATest {

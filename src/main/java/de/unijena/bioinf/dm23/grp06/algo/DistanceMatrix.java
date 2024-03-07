@@ -75,7 +75,6 @@ public class DistanceMatrix {
         for (LabelPair np : allKeys) {
             if (distances.get(np) < tempMinDistance) {
                 tempMinDistance = distances.get(np);
-                //this.minDistancePair = np;
                 minNodePair = np;
             }
         }
