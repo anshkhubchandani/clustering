@@ -136,6 +136,9 @@ import static org.junit.jupiter.api.Assertions.*;
                 validDM.addDistance("A", "B", 1.0);
                 validDM.addDistance("B", "C", 2.0);
                 validDM.addDistance("A", "C", 2.0);
+                validDM.addToNodeList("A");
+                validDM.addToNodeList("B");
+                validDM.addToNodeList("C");
                 return validDM;
 
         }
@@ -144,6 +147,9 @@ import static org.junit.jupiter.api.Assertions.*;
                 invalidDM.addDistance("A", "B", 1.0);
                 invalidDM.addDistance("B", "C", 3.0); // Violates triangle inequality???/
                 invalidDM.addDistance("A", "C", 5.0);
+                invalidDM.addToNodeList("A");
+                invalidDM.addToNodeList("B");
+                invalidDM.addToNodeList("C");
                 return invalidDM;
         }*/
 
