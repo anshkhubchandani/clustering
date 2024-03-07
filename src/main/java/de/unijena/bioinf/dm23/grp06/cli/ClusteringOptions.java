@@ -1,5 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.cli;
-
+/*
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import picocli.CommandLine;
 
@@ -68,3 +68,5 @@ public class ClusteringOptions implements Runnable{
         return true;
     }
 }
+
+ */

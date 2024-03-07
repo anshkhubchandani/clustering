@@ -33,7 +33,7 @@ public class NewickWriter {
             String line;
             System.out.println("Content of the output file:");
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                System.out.println(line );
             }
         } catch (IOException e) {
             e.printStackTrace();

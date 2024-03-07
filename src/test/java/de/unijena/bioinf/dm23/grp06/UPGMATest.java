@@ -66,14 +66,12 @@ import static org.junit.jupiter.api.Assertions.*;
             }
         }
 
-
-        /*
         @Test
         public void testUPGMAWithEmptyInput() {
             // Testen mit leerer Eingabematrix
             upgma.run();
 
-            // Erwartung: Keine Änderungen sollten vorgenommen werden
+            // Erwartung: Keine Änderungen sollten werden
             assertEquals(0, upgma.nextClusterCandidate().size());
         }
 
@@ -111,7 +109,8 @@ import static org.junit.jupiter.api.Assertions.*;
                 sb.append(alphabet.charAt(index));
             }
             return sb.toString();
-        }*/
+        }
+    }
 
 
 

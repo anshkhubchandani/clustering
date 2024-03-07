@@ -1,7 +1,7 @@
 package de.unijena.bioinf.dm23.grp06.cli;
 
 import picocli.CommandLine;
-
+/*
 public class CLMain {
 
     public static void main (String[] args) {
@@ -19,3 +19,4 @@ public class CLMain {
     }
 
 }
+*/
