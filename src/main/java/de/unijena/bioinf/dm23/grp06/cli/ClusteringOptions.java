@@ -1,7 +1,9 @@
 package de.unijena.bioinf.dm23.grp06.cli;
 
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import picocli.CommandLine;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ClusteringOptions implements Runnable{
@@ -13,18 +15,6 @@ public class ClusteringOptions implements Runnable{
     Input userInput;
 
     static class Input {
-
-        /* @CommandLine.ArgGroup(heading = "Input sequence")
-        InputSequence userInputSequence;
-
-        static class InputSequence {
-
-            @CommandLine.Option(names = {"-s", "--seq"}, description = "Input sequences to be used.")
-            ArrayList<String> inputSeq;
-
-            @CommandLine.Option(names = {"-t", "--type"}, description = "Sequence type of input sequences (DNA, RNA, amino acid AA, or ASCII).")
-            String sequenceType;
-        } */
 
         @CommandLine.Option(names = {"-s", "--seq"}, description = "Input sequences to be used.")
         ArrayList<String> inputSeq;
@@ -38,7 +28,7 @@ public class ClusteringOptions implements Runnable{
             "NJ: Neighbour joining")
     String method;
 
-    @CommandLine.Option(names = {"-o", "--output"}, description = "Saves results in an output file.")
+    @CommandLine.Option(names = {"-o", "--output"}, description = "Saves resulting tree in Newick format in an output file.")
     String outputFilePath;
 
     // Additional options here
@@ -47,11 +37,34 @@ public class ClusteringOptions implements Runnable{
     public void run() {
         RequestHandler userRequestHandler;
 
-        if (userInput.inputSeq != null) {
-
+        if (checkIfCorrectInput()) {
+            if (userInput.inputSeq != null) {
+                userRequestHandler = new RequestHandler(this.method, this.userInput.inputSeq);
+                userRequestHandler.printInfo();
+                writeInOutput(userRequestHandler);
+            }
+            else if (userInput.distanceMatrixPath != null) {
+                userRequestHandler = new RequestHandler(this.method, this.userInput.distanceMatrixPath);
+                userRequestHandler.printInfo();
+                writeInOutput(userRequestHandler);
+            }
         }
-        else if (userInput.distanceMatrixPath != null) {
 
+    }
+
+    private void writeInOutput (RequestHandler userRequest) {
+        if (this.outputFilePath != null) {
+            userRequest.writeTreeToNewick(this.outputFilePath);
         }
+    }
+
+    private boolean checkIfCorrectInput () {
+        if (this.userInput.inputSeq == null && this.userInput.distanceMatrixPath == null) {
+            throw new MissingInputsException("Input sequence or distance matrix required.");
+        }
+        else if (this.method == null) {
+            throw new MissingInputsException("Clustering algorithm required.");
+        }
+        return true;
     }
 }
