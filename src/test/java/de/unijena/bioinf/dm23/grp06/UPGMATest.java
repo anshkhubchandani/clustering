@@ -134,8 +134,8 @@ import static org.junit.jupiter.api.Assertions.*;
         private DistanceMatrix createValidDistanceMatrix() throws InvalidDistanceException {
                 DistanceMatrix validDM = new DistanceMatrix();
                 validDM.addDistance("A", "B", 1.0);
+                validDM.addDistance("B", "C", 2.0);
                 validDM.addDistance("A", "C", 2.0);
-                validDM.addDistance("B", "C", 3.0);
                 return validDM;
 
             }
@@ -143,8 +143,8 @@ import static org.junit.jupiter.api.Assertions.*;
         private DistanceMatrix createInvalidDistanceMatrix() throws InvalidDistanceException {
                 DistanceMatrix invalidDM = new DistanceMatrix();
                 invalidDM.addDistance("A", "B", 1.0);
-                invalidDM.addDistance("B", "C", 3.0); // Violates triangle inequality???
-                //invalidDM.addDistance("A", "C", 5.0);
+                invalidDM.addDistance("B", "C", 3.0); // Violates triangle inequality???/
+                invalidDM.addDistance("A", "C", 5.0);
                 return invalidDM;
         }
     }

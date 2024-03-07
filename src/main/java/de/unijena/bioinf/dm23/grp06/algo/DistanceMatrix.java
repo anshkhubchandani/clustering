@@ -89,17 +89,17 @@ public class DistanceMatrix {
             return false;
         }
         //Symmetrie
-        if (!isSymmetric()){
+        else if (!isSymmetric()){
             System.out.println("ERROR: Distance matrix is not symmetric.");
             return false;
         }
         //Positive Definitheit
-        if(!isPositiveDefinite()){
+        else if(!isPositiveDefinite()){
             System.out.println("ERROR: Distance matrix is not positive definite.");
             return false;
         }
         //Dreiecksungleichung
-        if(!satisfiesTriangleInequality()){
+        else if(!satisfiesTriangleInequality()){
             System.out.println("ERROR: Distance matrix does not satisfy the triangle inequality.");
             return false;
         }
