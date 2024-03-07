@@ -4,6 +4,7 @@ import de.unijena.bioinf.dm23.grp06.algo.*;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.io.FastaReader;
 import de.unijena.bioinf.dm23.grp06.io.NewickWriter;
+import de.unijena.bioinf.dm23.grp06.model.RootedTree;
 import de.unijena.bioinf.dm23.grp06.model.Tree;
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 import de.unijena.bioinf.dm23.grp06.model.TreeType;
@@ -13,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
@@ -98,58 +100,33 @@ public class Main {
         root.setFirstConnectedNode(internal1, 0.3);
         root.setSecondConnectedNode(leaf3, 0.4);
 
+        ArrayList<TreeNode> listOfNodes = new ArrayList<>();
+        listOfNodes.add(leaf1);
+        listOfNodes.add(leaf2);
+        listOfNodes.add(leaf3);
+        listOfNodes.add(internal1);
+        listOfNodes.add(root);
+
         // Create a sample label map
         HashMap<String, String> labelMap = new HashMap<>();
-        labelMap.put("A", "1");
-        labelMap.put("B", "2");
-        labelMap.put("C", "3");
-        labelMap.put("Internal1", "4");
-        labelMap.put("Root", "5");
+        labelMap.put("A", "AGCT");
+        labelMap.put("B", "ACCT");
+        labelMap.put("C", "TGAA");
+        labelMap.put("Internal1", "CTAC");
+        labelMap.put("Root", "AACTS");
 
         // Create a tree object
-        Tree tree = new Tree() {
-            private TreeNode availableNode = root;
-            private ArrayList<TreeNode> nodeList = new ArrayList<>();
+        Tree tree = new RootedTree(root, listOfNodes);
 
-            @Override
-            public TreeType getTreeType() {
-                return TreeType.ROOTED; // Adjust the return type based on your implementation
-            }
-
-            @Override
-            public ArrayList<TreeNode> getNodeList() {
-                return nodeList;
-            }
-
-            @Override
-            public TreeNode getAvailableNode() {
-                return availableNode;
-            }
-
-            @Override
-            public void setAvailableNode(TreeNode node) {
-                this.availableNode = node;
-            }
-
-            @Override
-            public void addNodesFromList(ArrayList<TreeNode> newNodes) {
-                nodeList.addAll(newNodes);
-            }
-
-            @Override
-            public void addNode(TreeNode node) {
-                nodeList.add(node);
-            }
-
-            @Override
-            public HashMap<String, Sequence> getListOfLeafLabels() {
-                return null;
-            }
-        };
+       // System.out.println("A: " + labelMap.get("A"));
+        /*for (Map.Entry<String,String> entry : labelMap.entrySet()){
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }*/
 
         // Test writing the tree to a file
         String filepath = "tree.newick";
-        NewickWriter.writeTreeToFile(tree, filepath);
+        NewickWriter.writeTreeToFile(tree, tree.getListOfLeafLabels(), filepath);
         System.out.println("Tree written to file: " + filepath);
+
     }
     }

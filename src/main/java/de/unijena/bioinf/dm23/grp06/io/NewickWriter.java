@@ -1,20 +1,28 @@
 package de.unijena.bioinf.dm23.grp06.io;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.model.Tree;
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.*;
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 //Reader und Writer fuer FASTA Dateien
 public class NewickWriter {
     private static final DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
-    public static void writeTreeToFile(Tree tree, String filepath) {
+    public static void writeTreeToFile(Tree tree, HashMap<String, Sequence> labelMap , String filepath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))) {
             TreeNode root = tree.getAvailableNode();
             if (root != null) {
                 writeNode(root, writer);
+            }
+            //LabelMap??
+            for (Map.Entry<String, Sequence> entry : labelMap.entrySet()){
+                writer.write(entry.getKey()+ ": " + entry.getValue());
+                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
