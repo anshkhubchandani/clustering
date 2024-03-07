@@ -138,8 +138,7 @@ import static org.junit.jupiter.api.Assertions.*;
                 validDM.addDistance("A", "C", 2.0);
                 return validDM;
 
-            }
-
+        }
         private DistanceMatrix createInvalidDistanceMatrix() throws InvalidDistanceException {
                 DistanceMatrix invalidDM = new DistanceMatrix();
                 invalidDM.addDistance("A", "B", 1.0);
