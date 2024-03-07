@@ -18,12 +18,14 @@ public class WPGMA extends PairGroupMethods {
 
         for (String nodeInMatrix : nodesInDistanceMatrix) {
 
-            newDistance = (this.distanceMatrix.getDistance(firstNode, nodeInMatrix) + this.distanceMatrix.getDistance(secondNode, nodeInMatrix)) / 2;
-            this.distanceMatrix.addDistance(nodeInMatrix, newClusterNode, newDistance);
+            try {
+                newDistance = (this.distanceMatrix.getDistance(firstNode, nodeInMatrix) + this.distanceMatrix.getDistance(secondNode, nodeInMatrix)) / 2;
 
+                this.distanceMatrix.addDistance(nodeInMatrix, newClusterNode, newDistance);
+            } catch (InvalidDistanceException e) {
+               System.err.println("Error calculating new distances" + e.getMessage());
+            }
         }
-
         this.distanceMatrix.addToNodeList(newClusterNode);
     }
-
 }

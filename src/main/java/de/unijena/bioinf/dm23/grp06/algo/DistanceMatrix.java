@@ -14,10 +14,12 @@ public class DistanceMatrix {
         nodesInMatrix = new ArrayList<>();
     }
 
-    public void addDistance(String taxon1, String taxon2, double distance) {
+    public void addDistance(String taxon1, String taxon2, double distance) throws InvalidDistanceException {
         //addToNodeList(taxon1);
         //addToNodeList(taxon2);
-
+        if (Double.isNaN(distance) ||Double.isInfinite(distance)||distance <0){
+            throw new InvalidDistanceException("Invalid distance provided: " + distance);
+        }
         LabelPair tempTaxon = new LabelPair(taxon1, taxon2);
         if (!distances.containsKey(tempTaxon)) {
             distances.put(tempTaxon, distance);

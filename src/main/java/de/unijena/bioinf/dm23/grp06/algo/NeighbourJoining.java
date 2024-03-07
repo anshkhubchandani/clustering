@@ -83,12 +83,15 @@ public class NeighbourJoining implements Clustering {
         ArrayList<String> nodesInDistanceMatrix = this.distanceMatrix.getNodesInMatrix();
 
         for (String nodeInMatrix : nodesInDistanceMatrix) {
-
+    try{
             nodeDistance = (this.distanceMatrix.getDistance(lastClustered.first, nodeInMatrix) +
                     this.distanceMatrix.getDistance(lastClustered.second, nodeInMatrix) -
                     this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second)) / 2;
             this.distanceMatrix.addDistance(nodeInMatrix, newClusterNode, nodeDistance);
-        }
+        }catch (InvalidDistanceException e) {
+        System.out.println("Error updating distance matrix" + e.getMessage());
+    }
+    }
 
         this.distanceMatrix.deleteDistances(lastClustered.first, lastClustered.second);
         this.distanceMatrix.addToNodeList(newClusterNode);

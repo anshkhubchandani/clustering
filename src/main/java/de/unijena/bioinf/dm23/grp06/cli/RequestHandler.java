@@ -144,8 +144,11 @@ public class RequestHandler {
 
             firstLabel = lookForLabel(a.getSequence1().getName());
             secondLabel = lookForLabel(a.getSequence2().getName());
-            dm.addDistance(firstLabel, secondLabel, a.linearScore());
-
+            try {
+                dm.addDistance(firstLabel, secondLabel, a.linearScore());
+            } catch (InvalidDistanceException e) {
+                System.err.println("Error adding distance to distance matrix: " + e.getMessage());
+            }
         }
         return dm;
     }

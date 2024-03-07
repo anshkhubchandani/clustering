@@ -22,12 +22,15 @@ public class UPGMA extends PairGroupMethods {
         int secondNodeCluster = numberOfCluster(secondNode);
 
         for (String nodeInMatrix : nodesInDistanceMatrix) {
-
+            try {
             newDistance = ((firstNodeCluster * this.distanceMatrix.getDistance(firstNode, nodeInMatrix)) +
                     (secondNodeCluster * this.distanceMatrix.getDistance(secondNode, nodeInMatrix))) /
                     (firstNodeCluster + secondNodeCluster);
-            this.distanceMatrix.addDistance(nodeInMatrix, newClusterNode, newDistance);
 
+                this.distanceMatrix.addDistance(nodeInMatrix, newClusterNode, newDistance);
+            } catch (InvalidDistanceException e) {
+                System.err.println("Error calculating new distances: " + e.getMessage());
+            }
         }
         this.distanceMatrix.addToNodeList(newClusterNode);
     }

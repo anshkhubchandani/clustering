@@ -1,6 +1,7 @@
 package de.unijena.bioinf.dm23.grp06.io;
 
 import de.unijena.bioinf.dm23.grp06.algo.DistanceMatrix;
+import de.unijena.bioinf.dm23.grp06.algo.InvalidDistanceException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,6 +33,8 @@ public class DistanceMatrixReader {
                 matrix.addToNodeList(taxon1);
                 matrix.addToNodeList(taxon2);
             }
+        } catch (InvalidDistanceException e) {
+            throw new RuntimeException(e);
         }
 
         return matrix;

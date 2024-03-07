@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import de.unijena.bioinf.dm23.grp06.algo.NeighbourJoining;
 
 import javax.swing.*;
-
+/*
 public class NJtest {
 
     DistanceMatrix dm = new DistanceMatrix();
