@@ -127,5 +127,6 @@ public class Main {
         String filepath = "tree.newick";
         NewickWriter.writeTreeToFile(tree, tree.getListOfLeafLabels(), filepath);
         System.out.println("Tree written to file: " + filepath);
+
     }
     }
