@@ -27,8 +27,6 @@ import static org.junit.jupiter.api.Assertions.*;
             dm.addDistance("A", "C", Double.POSITIVE_INFINITY); // Distance is infinity
             dm.addDistance("B", "C", Double.POSITIVE_INFINITY); // Distance is NaN
             dm.addDistance("D", "E", -1); // Negative distance
-
-            // Adding nodes to the node list
             dm.addToNodeList("A");
             dm.addToNodeList("B");
             dm.addToNodeList("C");
@@ -131,8 +129,31 @@ import static org.junit.jupiter.api.Assertions.*;
             return sequence.toString();
         }
 
+        @Test
+        void testMetricProperties () {
 
+            DistanceMatrix validDM = createValidDistanceMatrix();
+            assertTrue(validDM.checkMetric(), "Valid matrix");
 
+            DistanceMatrix invalidDM = createInvalidDistanceMatrix();
+            assertFalse(invalidDM.checkMetric(), "Invalid Matrix");
+        }
+
+        private DistanceMatrix createValidDistanceMatrix() {
+            DistanceMatrix validDM = new DistanceMatrix();
+            validDM.addDistance("A", "B", 1.0);
+            validDM.addDistance("A", "C", 2.0);
+            validDM.addDistance("B", "C", 3.0);
+            return validDM;
+
+        }
+        private DistanceMatrix createInvalidDistanceMatrix() {
+            DistanceMatrix invalidDM = new DistanceMatrix();
+            invalidDM.addDistance("A", "B", 1.0);
+            invalidDM.addDistance("B", "C", 3.0); // Violates triangle inequality???
+            //invalidDM.addDistance("A", "C", 5.0);
+            return invalidDM;
+        }
     }
 
 
