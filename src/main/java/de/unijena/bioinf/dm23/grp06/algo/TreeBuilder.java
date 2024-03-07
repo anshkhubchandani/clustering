@@ -15,6 +15,7 @@ public class TreeBuilder {
     // private boolean finishedBuilding;
 
     public TreeBuilder (TreeType type, Clustering clusteringAlgorithm, HashMap<String, Sequence> leafLabels) {
+        this.mapOfTrees = new HashMap<>();
         this.treeType = type;
         this.clusteringMethod = clusteringAlgorithm;
         this.listOfLeafLabels = leafLabels;

@@ -1,5 +1,5 @@
 package de.unijena.bioinf.dm23.grp06.cli;
-/*
+
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import picocli.CommandLine;
 
@@ -66,10 +66,9 @@ public class ClusteringOptions implements Runnable{
             throw new MissingInputsException("Clustering algorithm required.");
         }
         else if (this.outputFilePath == null) {
+            // TODO checken, ob File schon existiert wenn ja -> Fehler
             throw new MissingInputsException("File name or path of output file required.");
         }
         return true;
     }
 }
-
- */
