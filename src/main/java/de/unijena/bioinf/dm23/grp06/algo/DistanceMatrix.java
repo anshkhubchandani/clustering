@@ -62,7 +62,12 @@ public class DistanceMatrix {
         this.nodesInMatrix.remove(nodeLabel);
     }
 
-    protected LabelPair getMinimumDistancePair (){
+    protected LabelPair getMinimumDistancePair () {
+        //hier
+        /*if (distances.isEmpty()){
+            throw new IllegalStateException("The distance map is empty!");
+        }*/
+
         LabelPair[] allKeys = distances.keySet().toArray(new LabelPair[0]);
         double tempMinDistance = Double.MAX_VALUE;
         LabelPair minNodePair = allKeys[0];

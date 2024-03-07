@@ -4,7 +4,6 @@ import de.unijena.bioinf.dm23.grp06.io.NewickWriter;
 import de.unijena.bioinf.dm23.grp06.model.RootedTree;
 import de.unijena.bioinf.dm23.grp06.model.Tree;
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
-import de.unijena.bioinf.dm23.grp06.model.TreeType;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -48,48 +47,8 @@ public class NewickWriterTest {
         //treeNodes.add(root);
         Tree tree = new RootedTree(internal2, treeNodes);
 
-        // Create a tree object
-        /*Tree tree = new Tree() {
-            private TreeNode availableNode = root;
-            private ArrayList<TreeNode> nodeList = new ArrayList<>();
 
-            @Override
-            public TreeType getTreeType() {
-                return TreeType.ROOTED;
-            }
-
-            @Override
-            public ArrayList<TreeNode> getNodeList() {
-                return nodeList;
-            }
-
-            @Override
-            public TreeNode getAvailableNode() {
-                return availableNode;
-            }
-
-            @Override
-            public void setAvailableNode(TreeNode node) {
-                this.availableNode = node;
-            }
-
-            @Override
-            public void addNodesFromList(ArrayList<TreeNode> newNodes) {
-                nodeList.addAll(newNodes);
-            }
-
-            @Override
-            public void addNode(TreeNode node) {
-                nodeList.add(node);
-            }
-
-            @Override
-            public HashMap<String, Sequence> getListOfLeafLabels() {
-                return null;
-            }
-        };*/
-
-        String expectedNewick = "(((A:0.1,B:0.2):0.3,C:0.4):0.5)";
+        String expectedNewick = "((A:0.1,B:0.2):0.3,C:0.4)";
 
         // Define the file path for the test output
         String filepath = "test_tree_simple.newick";
