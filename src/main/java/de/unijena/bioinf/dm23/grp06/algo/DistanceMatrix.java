@@ -113,6 +113,11 @@ public class DistanceMatrix {
         return minNodePair;
     }
 
+    /**
+     * This method tests if the given metric is valid.
+     * @return true, if metric is valid, otherwise false.
+     */
+
     public boolean checkMetric () {
         if(distances.isEmpty()){
             System.out.println("ERROR: Distance matrix is null");
@@ -145,6 +150,7 @@ public class DistanceMatrix {
         }
         return true;
     }
+
     private boolean isPositiveDefinite() {
         for (Double distance : distances.values()) {
             if (distance <= 0) {
