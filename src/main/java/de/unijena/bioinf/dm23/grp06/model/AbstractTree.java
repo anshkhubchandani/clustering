@@ -26,7 +26,7 @@ public abstract class AbstractTree implements Tree {
     @Override
     public HashMap<String, Sequence> getListOfLeafLabels() {
         // TODO !!!
-        return null;
+        return this.listOfLeafLabels;
     }
 
     @Override

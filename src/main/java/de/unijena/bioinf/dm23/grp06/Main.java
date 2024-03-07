@@ -1,6 +1,7 @@
 package de.unijena.bioinf.dm23.grp06;
 
 import de.unijena.bioinf.dm23.grp06.algo.*;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.io.FastaReader;
 import de.unijena.bioinf.dm23.grp06.io.NewickWriter;
@@ -115,8 +116,17 @@ public class Main {
         labelMap.put("Internal1", "CTAC");
         labelMap.put("Root", "AACTS");
 
+        HashMap <String, Sequence> leafLabels = new HashMap<>();
+        leafLabels.put("A", new AsciiSequence("fsdfsf", "leaf1"));
+        leafLabels.put("B", new AsciiSequence("fsfds", "leaf2"));
+        leafLabels.put("C", new AsciiSequence("sefsdfs", "leaf3"));
+
         // Create a tree object
         Tree tree = new RootedTree(root, listOfNodes);
+        tree.setListOfLeafLabels(leafLabels);
+        String filepath = "tree.newick";
+        NewickWriter.writeTreeToFile(tree, tree.getListOfLeafLabels(), filepath);
+        System.out.println("Tree written to file: " + filepath);
 
        // System.out.println("A: " + labelMap.get("A"));
         /*for (Map.Entry<String,String> entry : labelMap.entrySet()){

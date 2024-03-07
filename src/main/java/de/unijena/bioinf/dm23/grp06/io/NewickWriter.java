@@ -21,8 +21,9 @@ public class NewickWriter {
             }
             //LabelMap??
             for (Map.Entry<String, Sequence> entry : labelMap.entrySet()){
-                writer.write(entry.getKey()+ ": " + entry.getValue());
                 writer.newLine();
+                writer.write(entry.getKey() + ": " + entry.getValue().getName());
+                //writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();

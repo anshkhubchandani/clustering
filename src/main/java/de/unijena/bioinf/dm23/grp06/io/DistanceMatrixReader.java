@@ -29,6 +29,8 @@ public class DistanceMatrixReader {
                 double distance = Double.parseDouble(parts[2]);
 
                 matrix.addDistance(taxon1, taxon2, distance);
+                matrix.addToNodeList(taxon1);
+                matrix.addToNodeList(taxon2);
             }
         }
 
