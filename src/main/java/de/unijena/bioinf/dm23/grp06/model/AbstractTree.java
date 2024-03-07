@@ -13,6 +13,7 @@ public abstract class AbstractTree implements Tree {
     HashMap<String, Sequence> listOfLeafLabels;
 
     public AbstractTree (TreeNode available, ArrayList<TreeNode> nodesOfNewTree) {
+        this.availableNode = available;
         this.treeNodeList = nodesOfNewTree;
     }
 

@@ -24,16 +24,32 @@ public class RequestHandler {
     ArrayList<Sequence> inputSequences;
     HashMap<String, Sequence> sequenceLabels;
 
-    public RequestHandler (String algorithm, ArrayList<String> inputPath, TreeType type, FastaReader fastaReader) {
+    public RequestHandler (String algorithm, ArrayList<String> inputPath, TreeType type, FastaReader fastaReader) throws IOException{
         this.algo = algorithm;
-
-
+        readAllInputSequences(inputPath);
+        // TODO
+        /*
+        - Distanzmatrix machen (Alignments, dann alles zu dm adden)
+        - Treebuilder erstellen
+        - Clustering algo erstellen
+        - letzten beiden Punkte vllt in getrennter Methode, die auch vom anderen Konstruktor aufgerufen werden kann?
+         */
         // setClusteringAlgorithm(algorithm, distanceMatrix);
     }
 
     public RequestHandler (String algorithm, String distanceMatrixPath, TreeType type) {
-        // this.algo = algorithm;
+        DistanceMatrix dm = readMatrix(distanceMatrixPath);
         setClusteringAlgorithm(algorithm, readMatrix(distanceMatrixPath));
+        // Wo kommen die LeafLabels her, wenn es keine Input Sequenzen gibt ohje ohje...
+        // TODO
+        // this.algo = algorithm;
+
+    }
+
+    private void readAllInputSequences (ArrayList<String> inputPaths) throws IOException {
+        for (String path : inputPaths) {
+            this.inputSequences.addAll(readFastaFromFile(Paths.get(path)));
+        }
     }
 
     public ArrayList<Sequence> readFastaFromFile(Path filepath) throws IOException {
@@ -103,5 +119,9 @@ public class RequestHandler {
     private void createTreeBuilder (HashMap<String, Sequence> leafLabels, TreeType type) {
         // TreeBuilder initialisieren
         TreeBuilder treeBuilder = new TreeBuilder(type, clusteringAlgorithm, leafLabels);
+    }
+
+    protected void writeTreeToNewick () {
+
     }
 }
