@@ -35,10 +35,13 @@ public class NewickWriter {
             writeNode(node.getFirstConnectedNode(), writer);
             writer.write(":");
             writer.write(decimalFormat.format(node.distanceToFirst).replace(",", "."));
-            writer.write(",");
-            writeNode(node.getSecondConnectedNode(), writer);
-            writer.write(":");
-            writer.write(decimalFormat.format(node.distanceToSecond).replace(",", "."));
+            TreeNode secondConnectedNode = node.getSecondConnectedNode();
+            if (secondConnectedNode != null) {
+                writer.write(",");
+                writeNode(secondConnectedNode, writer);
+                writer.write(":");
+                writer.write(decimalFormat.format(node.distanceToSecond).replace(",", "."));
+            }
             writer.write(")");
         }
     }
