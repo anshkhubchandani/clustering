@@ -7,8 +7,10 @@ import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.io.DistanceMatrixReader;
 import de.unijena.bioinf.dm23.grp06.io.FastaReader;
+import de.unijena.bioinf.dm23.grp06.io.NewickWriter;
 import de.unijena.bioinf.dm23.grp06.model.TreeType;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -59,9 +61,16 @@ public class RequestHandler {
     }
 
     private void readAllInputSequences (ArrayList<String> inputPaths) {
+        File filepath;
         try {
             for (String path : inputPaths) {
-                this.inputSequences.addAll(readFastaFromFile(Paths.get(path)));
+                filepath = new File(path);
+                if (filepath.isFile()) {
+                    this.inputSequences.addAll(readFastaFromFile(Paths.get(path)));
+                }
+                else {
+                    this.inputSequences.add(new AsciiSequence(path, ("User input sequence: " + path)));
+                }
             }
         }
         catch (IOException e) {
@@ -168,7 +177,7 @@ public class RequestHandler {
 
     protected void writeTreeToNewick (String outputFilePath) {
         if (this.treeBuilder.isFinishedBuilding()) {
-
+            NewickWriter.writeTreeToFile(this.treeBuilder.getFinishedTree(), this.sequenceLabels, outputFilePath);
         }
     }
 
