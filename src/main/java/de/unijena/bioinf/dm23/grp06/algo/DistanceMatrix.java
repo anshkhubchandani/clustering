@@ -21,12 +21,12 @@ public class DistanceMatrix {
             throw new InvalidDistanceException("Invalid distance provided: " + distance);
         }
         LabelPair tempTaxon = new LabelPair(taxon1, taxon2);
-        if (!distances.containsKey(tempTaxon)) {
+        //if (!distances.containsKey(tempTaxon)) {
             distances.put(tempTaxon, distance);
-        }
-        else {
-            System.err.println("Couldn't add new distance to distance matrix.");
-        }
+        //}
+        //else {
+        //    System.err.println("Couldn't add new distance to distance matrix.");
+        //}
     }
 
     public void addToNodeList (String taxon) {
