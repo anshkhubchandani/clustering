@@ -91,6 +91,7 @@ public class NeighbourJoining implements Clustering {
         }
 
         this.distanceMatrix.deleteDistances(lastClustered.first, lastClustered.second);
+        this.distanceMatrix.addToNodeList(newClusterNode);
         calculateRValues();
     }
 
