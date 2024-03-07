@@ -40,7 +40,16 @@ public class TreeBuilder {
 
             connectTrees(nextCluster, newLabel, this.clusteringMethod.distanceToFirst(nextCluster), this.clusteringMethod.distanceToSecond(nextCluster));
 
-            this.clusteringMethod.updateDistanceMatrix(nextCluster, newLabel);
+            if (!isFinishedBuilding()) {
+                this.clusteringMethod.updateDistanceMatrix(nextCluster, newLabel);
+            }
+        }
+
+        if (treeType.equals(TreeType.UNROOTED)) {
+            nextCluster = this.clusteringMethod.nextClusterCandidate();
+
+            connectLastPartsOfUnrootedTree(this.mapOfTrees.get(nextCluster.first), this.mapOfTrees.get(nextCluster.second),
+                    this.clusteringMethod.distanceToFirst(nextCluster));
         }
 
         String[] keys = this.mapOfTrees.keySet().toArray(new String[0]);

@@ -21,7 +21,7 @@ import java.util.Map;
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InvalidDistanceException {
 
         /*Path filePath = Paths.get("/Users/larry/Git/testfiles/aquifex-tRNA-clean.fasta");
         ArrayList<Sequence> sequences = FastaReader.readFasta(filePath);
@@ -59,7 +59,7 @@ public class Main {
         System.out.println(lp3.getTaxon1() + " " + test.distanceToFirst(lp3) + " "
                 +  lp3.getTaxon2() + " " + test.distanceToSecond(lp3));
         */
- /*
+
         DistanceMatrix dm = new DistanceMatrix();
         dm.addDistance("Mensch", "Maus", 3);
         dm.addDistance("Mensch", "Rose", 14);
@@ -91,7 +91,7 @@ public class Main {
         // /Users/larry/Git/testfiles/aquifex-tRNA-clean.fasta */
 
         //Sample tree for NewickWriter
-        TreeNode leaf1 = new TreeNode("A", true); // A
+        /* TreeNode leaf1 = new TreeNode("A", true); // A
         TreeNode leaf2 = new TreeNode("B", true); // B
         TreeNode leaf3 = new TreeNode("C", true); // C
         TreeNode internal1 = new TreeNode("Internal1",false); // Internal1
@@ -126,7 +126,7 @@ public class Main {
         tree.setListOfLeafLabels(leafLabels);
         String filepath = "tree.newick";
         NewickWriter.writeTreeToFile(tree, tree.getListOfLeafLabels(), filepath);
-        System.out.println("Tree written to file: " + filepath);
+        System.out.println("Tree written to file: " + filepath); */
 
        // System.out.println("A: " + labelMap.get("A"));
         /*for (Map.Entry<String,String> entry : labelMap.entrySet()){

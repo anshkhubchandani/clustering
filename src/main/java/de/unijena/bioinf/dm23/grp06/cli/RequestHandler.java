@@ -1,8 +1,8 @@
 package de.unijena.bioinf.dm23.grp06.cli;
 
 import de.unijena.bioinf.dm23.grp06.algo.*;
+import de.unijena.bioinf.dm23.grp06.algo.ClusteringScorer;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.NeedlemanWunsch;
-import de.unijena.bioinf.dm23.grp06.alignments.algo.Scorer;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.grp06.io.DistanceMatrixReader;
@@ -61,6 +61,7 @@ public class RequestHandler {
     }
 
     private void readAllInputSequences (ArrayList<String> inputPaths) {
+        this.inputSequences = new ArrayList<>();
         File filepath;
         try {
             for (String path : inputPaths) {
@@ -120,13 +121,14 @@ public class RequestHandler {
         // globales Alignment
 
         ArrayList<NeedlemanWunsch<Sequence>> alignmentObjects = new ArrayList<>();
-        Scorer scorer = new Scorer();
+        ClusteringScorer scorer = new ClusteringScorer();
+        System.out.println(scorer.getScoresAsString());
         int k = 0;
 
         for (int i = 0; i < this.inputSequences.size(); i++) {
             for (int j = k; j < this.inputSequences.size(); j++) {
                 if (!(i == j)) {
-                    alignmentObjects.add(new NeedlemanWunsch<>(inputSequences.get(i), inputSequences.get(k), scorer));
+                    alignmentObjects.add(new NeedlemanWunsch<>(inputSequences.get(i), inputSequences.get(j), scorer));
                 }
             }
             k++;
@@ -146,6 +148,8 @@ public class RequestHandler {
             secondLabel = lookForLabel(a.getSequence2().getName());
             try {
                 dm.addDistance(firstLabel, secondLabel, a.linearScore());
+                dm.addToNodeList(firstLabel);
+                dm.addToNodeList(secondLabel);
             } catch (InvalidDistanceException e) {
                 System.err.println("Error adding distance to distance matrix: " + e.getMessage());
             }

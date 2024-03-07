@@ -121,7 +121,7 @@ import static org.junit.jupiter.api.Assertions.*;
                 return sequence.toString();
             }
 
-           /* @Test
+           @Test
             public void testMetricProperties() throws InvalidDistanceException {
 
                 DistanceMatrix validDM = createValidDistanceMatrix();
@@ -151,7 +151,7 @@ import static org.junit.jupiter.api.Assertions.*;
                 invalidDM.addToNodeList("B");
                 invalidDM.addToNodeList("C");
                 return invalidDM;
-        }*/
+        }
 
         @Test
         public void testMetricSymmetric() throws InvalidDistanceException {

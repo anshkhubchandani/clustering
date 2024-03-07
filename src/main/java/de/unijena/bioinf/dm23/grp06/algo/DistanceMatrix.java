@@ -54,7 +54,7 @@ public class DistanceMatrix {
     }
     
     public double getDistance (String taxon1, String taxon2) {
-        old : return taxon1.equals(taxon2) ? 0 : this.distances.get(new LabelPair(taxon1, taxon2));
+        return taxon1.equals(taxon2) ? 0 : this.distances.get(new LabelPair(taxon1, taxon2));
     }
     public ArrayList<String> getNodesInMatrix () {
         return this.nodesInMatrix;

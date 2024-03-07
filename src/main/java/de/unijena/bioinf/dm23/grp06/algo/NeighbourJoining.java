@@ -24,8 +24,13 @@ public class NeighbourJoining implements Clustering {
 
     @Override
     public double distanceToFirst(LabelPair lastClustered) {
-        return (this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second) +
-                rValues.get(lastClustered.first) - rValues.get(lastClustered.second))/2;
+        if (this.distanceMatrix.getNodesInMatrix().size() == 2) {
+            return this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second);
+        }
+        else {
+            return (this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second) +
+                    rValues.get(lastClustered.first) - rValues.get(lastClustered.second))/2;
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package de.unijena.bioinf.dm23.grp06.cli;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.MissingInputsException;
 import picocli.CommandLine;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class ClusteringOptions implements Runnable{
 
     static class Input {
 
-        @CommandLine.Option(names = {"-s", "--seq"}, description = "Input sequences to be used.")
+        @CommandLine.Option(names = {"-s", "--seq"}, description = "Input sequences to be used.", split = " ", arity = "1...*")
         ArrayList<String> inputSeq;
 
         @CommandLine.Option(names = {"-m", "--matrix"}, description = "File path of a distance matrix as an input to create a phylogenic tree.")
@@ -66,9 +67,16 @@ public class ClusteringOptions implements Runnable{
             throw new MissingInputsException("Clustering algorithm required.");
         }
         else if (this.outputFilePath == null) {
-            // TODO checken, ob File schon existiert wenn ja -> Fehler
-            throw new MissingInputsException("File name or path of output file required.");
+            throw new MissingInputsException("File name or file path of an output file required.");
+        }
+        else if (checkIfFileAlreadyExists()) {
+            throw new MissingInputsException("An output file with this name already exists.");
         }
         return true;
+    }
+
+    private boolean checkIfFileAlreadyExists () {
+        File file = new File(this.outputFilePath);
+        return file.isFile();
     }
 }
