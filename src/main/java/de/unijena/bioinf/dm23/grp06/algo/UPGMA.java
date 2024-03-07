@@ -3,6 +3,9 @@ package de.unijena.bioinf.dm23.grp06.algo;
 import de.unijena.bioinf.dm23.grp06.model.TreeNode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class UPGMA extends PairGroupMethods {
 
@@ -29,7 +32,15 @@ public class UPGMA extends PairGroupMethods {
         this.distanceMatrix.addToNodeList(newClusterNode);
     }
 
+
     private int numberOfCluster (String node) {
-        return node.split("-").length;
-    }
+       /* return node.split("-").length;*/
+        //Ansh probiert was desperate aus
+
+            // Split the node name by "-" character
+            String[] parts = node.split("-");
+            // If the node name contains "-", return the length of the resulting array
+            // Otherwise, return 1
+            return parts.length > 1 ? parts.length : 1;
+        }
 }
