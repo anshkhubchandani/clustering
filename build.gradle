@@ -50,8 +50,8 @@ dependencies {
 
 apply plugin: 'application'
 application {
-    mainClassName = 'de.unijena.bioinf.dm23.grp06.clustering.Main'
-    applicationDefaultJvmArgs = ["-Xmx2G"]
+    mainClassName = 'de.unijena.bioinf.dm23.grp06.clustering.CLMain'
+    applicationDefaultJvmArgs = ["-Xmx5G"]
 }
 
 /*dependencies {
