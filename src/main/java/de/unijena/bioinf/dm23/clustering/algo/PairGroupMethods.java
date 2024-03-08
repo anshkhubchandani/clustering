@@ -53,4 +53,8 @@ public abstract class PairGroupMethods implements Clustering {
      */
     protected abstract void calculateNewDistances(String firstNode, String secondNode, String newClusterNode);
 
+    @Override
+    public DistanceMatrix getDistanceMatrix() {
+        return this.distanceMatrix;
+    }
 }

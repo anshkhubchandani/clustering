@@ -58,12 +58,13 @@ public class TreeBuilder {
         }
 
         if (treeType.equals(TreeType.UNROOTED)) {
-            nextCluster = this.clusteringMethod.nextClusterCandidate();
+
 
             String[] remainingTreeKeys = mapOfTrees.keySet().toArray(new String[0]);
+            DistanceMatrix dm = this.clusteringMethod.getDistanceMatrix();
 
             connectLastPartsOfUnrootedTree(this.mapOfTrees.get(remainingTreeKeys[0]), this.mapOfTrees.get(remainingTreeKeys[1]),
-                    this.clusteringMethod.distanceToFirst(nextCluster));
+                    dm.getDistance(remainingTreeKeys[0], remainingTreeKeys[1]));
         }
 
         String[] keys = this.mapOfTrees.keySet().toArray(new String[0]);
