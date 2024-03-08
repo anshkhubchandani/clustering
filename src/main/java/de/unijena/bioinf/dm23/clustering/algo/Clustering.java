@@ -35,5 +35,6 @@ public interface Clustering {
      * @param newClusterNode the new cluster node created from the clustering
      */
     void updateDistanceMatrix(LabelPair oldNode, String newClusterNode);
+    DistanceMatrix getDistanceMatrix();
 
 }

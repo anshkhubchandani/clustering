@@ -23,7 +23,7 @@ public abstract class PairGroupMethods implements Clustering {
 
     @Override
     public double distanceToFirst(LabelPair lastClustered) {
-        return this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second);
+        return this.distanceMatrix.getDistance(lastClustered.first, lastClustered.second) / 2;
     }
 
     @Override
@@ -53,4 +53,8 @@ public abstract class PairGroupMethods implements Clustering {
      */
     protected abstract void calculateNewDistances(String firstNode, String secondNode, String newClusterNode);
 
+    @Override
+    public DistanceMatrix getDistanceMatrix() {
+        return this.distanceMatrix;
+    }
 }

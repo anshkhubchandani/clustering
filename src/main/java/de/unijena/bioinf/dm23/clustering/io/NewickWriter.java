@@ -1,6 +1,7 @@
 package de.unijena.bioinf.dm23.clustering.io;
 import de.unijena.bioinf.dm23.clustering.model.Tree;
 import de.unijena.bioinf.dm23.clustering.model.TreeNode;
+import de.unijena.bioinf.dm23.clustering.model.TreeType;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 
 import java.io.BufferedReader;
@@ -29,6 +30,11 @@ public class NewickWriter {
             TreeNode root = tree.getAvailableNode();
             if (root != null) {
                 writeNode(root, writer);
+            }
+            if (tree.getTreeType().equals(TreeType.UNROOTED)) {
+                root = tree.getAvailableNode().getThirdConnectedNode();
+                writeNode(root, writer);
+                writer.write(":" + tree.getAvailableNode().distanceToThird);
             }
             //LabelMap??
             for (Map.Entry<String, Sequence> entry : labelMap.entrySet()){

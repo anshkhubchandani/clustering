@@ -114,4 +114,8 @@ public class NeighbourJoining implements Clustering {
         calculateRValues();
     }
 
+    @Override
+    public DistanceMatrix getDistanceMatrix() {
+        return this.distanceMatrix;
+    }
 }

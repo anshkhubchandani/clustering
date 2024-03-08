@@ -11,7 +11,7 @@ public class TreeNode {
     private TreeNode thirdConnectedNode;
     public double distanceToFirst;
     public double distanceToSecond;
-    private double distanceToThird;
+    public double distanceToThird;
     public final boolean isLeaf;
 
     /**
