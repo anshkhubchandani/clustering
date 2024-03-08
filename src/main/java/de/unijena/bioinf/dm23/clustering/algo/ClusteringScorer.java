@@ -5,6 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * A new Scorer Subclass of Scorer (in project alignments) with new default scores to be used for Clustering.
+ */
 public class ClusteringScorer extends de.unijena.bioinf.dm23.grp06.alignments.algo.Scorer {
 
     private final boolean defaultScores;
