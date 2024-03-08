@@ -82,7 +82,7 @@ public class ClusteringOptions implements Runnable{
             throw new MissingInputsException("File name or file path of an output file required.");
         }
         else if (checkIfFileAlreadyExists()) {
-            throw new MissingInputsException("An output file with this name already exists.");
+            throw new IllegalArgumentException("An output file with this name already exists.");
         }
         return true;
     }
