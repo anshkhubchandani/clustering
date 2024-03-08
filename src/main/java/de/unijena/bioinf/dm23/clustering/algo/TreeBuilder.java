@@ -58,7 +58,9 @@ public class TreeBuilder {
         }
 
         if (treeType.equals(TreeType.UNROOTED)) {
-
+            nextCluster = this.clusteringMethod.nextClusterCandidate();
+            newLabel = nextCluster.first.concat("-").concat(nextCluster.second);
+            this.clusteringMethod.updateDistanceMatrix(nextCluster, newLabel);
 
             String[] remainingTreeKeys = mapOfTrees.keySet().toArray(new String[0]);
             DistanceMatrix dm = this.clusteringMethod.getDistanceMatrix();
