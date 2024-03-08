@@ -1,6 +1,6 @@
 package de.unijena.bioinf.dm23.clustering.cli;
 
-import de.unijena.bioinf.dm23.grp06.algo.*;
+//import de.unijena.bioinf.dm23.grp06.algo.*;
 import de.unijena.bioinf.dm23.grp06.algo.ClusteringScorer;
 import de.unijena.bioinf.dm23.clustering.algo.*;
 import de.unijena.bioinf.dm23.clustering.model.TreeType;
@@ -33,11 +33,12 @@ public class RequestHandler {
      * Constructs a RequestHandler object with the given algorithm and input sequences.
      *
      * @param algorithm   the clustering algorithm to use
-     * @param inputPaths  the paths to input sequences
+     * @param inputPath  the paths to input sequences
      */
     public RequestHandler (String algorithm, ArrayList<String> inputPath) {
         this.algorithm = algorithm;
         this.inputType = "sequences";
+        this.sequenceLabels = new HashMap<>();
 
         readAllInputSequences(inputPath);
         assignLabelsToSequences();
@@ -61,6 +62,7 @@ public class RequestHandler {
     public RequestHandler (String algorithm, String distanceMatrixPath) {
         this.algorithm = algorithm;
         this.inputType = "distance matrix";
+        this.sequenceLabels = new HashMap<>();
 
         DistanceMatrix dm = readMatrix(distanceMatrixPath);
 
@@ -105,7 +107,7 @@ public class RequestHandler {
     private DistanceMatrix readMatrix (String distanceMatrixPath) {
         DistanceMatrix dm = new DistanceMatrix();
         try {
-            dm = DistanceMatrixReader.readMyMatrix(Paths.get(distanceMatrixPath));
+            dm = DistanceMatrixReader.readMyMatrix(distanceMatrixPath);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -115,7 +117,6 @@ public class RequestHandler {
 
     private void assignLabelsToSequences () {
         String label;
-        sequenceLabels = new HashMap<>();
         for (int i = 1; i <= this.inputSequences.size(); i++) {
             label = "Seq" + i;
             sequenceLabels.put(label, this.inputSequences.get(i-1));

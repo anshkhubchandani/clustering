@@ -30,7 +30,7 @@ public class DistanceMatrix {
             throw new InvalidDistanceException("Invalid distance provided: " + distance);
         }
         LabelPair tempTaxon = new LabelPair(taxon1, taxon2);
-            distances.put(tempTaxon, distance);
+        distances.put(tempTaxon, distance);
 
     }
 
@@ -42,6 +42,17 @@ public class DistanceMatrix {
     public void addToNodeList (String taxon) {
         if (!nodesInMatrix.contains(taxon)) {
             nodesInMatrix.add(taxon);
+        }
+    }
+
+    /**
+     * Adds multiple labels to the list of nodes in the matrix.
+     *
+     * @param labels ArrayList of all labels to add to the node list
+     */
+    public void addAllLabelsToNodeList (ArrayList<String> labels) {
+        for (String s : labels) {
+            this.nodesInMatrix.add(s);
         }
     }
 
@@ -198,5 +209,4 @@ public class DistanceMatrix {
     private boolean isConnected(String node1, String node2) {
         return distances.containsKey(new LabelPair(node1, node2)) || distances.containsKey(new LabelPair(node2, node1));
     }
-
 }
