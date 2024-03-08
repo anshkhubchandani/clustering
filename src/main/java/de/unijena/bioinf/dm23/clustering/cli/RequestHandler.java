@@ -223,5 +223,6 @@ public class RequestHandler {
         sb.append("Algorithm: ").append(this.algorithm).append("\n");
         sb.append("Input type: ").append(this.inputType).append("\n");
         sb.append(this.sequenceLabels.size()).append(" sequences in total.\n");
+        System.out.println(sb.toString());
     }
 }
