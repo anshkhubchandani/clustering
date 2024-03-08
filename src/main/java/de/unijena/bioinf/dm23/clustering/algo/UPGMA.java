@@ -47,11 +47,5 @@ public class UPGMA extends PairGroupMethods {
     private int numberOfCluster (String node) {
        return node.split("-").length;
 
-        //Ansh probiert was desperate aus
-            // Split the node name by "-" character
-            //String[] parts = node.split("-");
-            // If the node name contains "-", return the length of the resulting array
-            // Otherwise, return 1
-        //return parts.length > 1 ? parts.length : 1;
         }
 }

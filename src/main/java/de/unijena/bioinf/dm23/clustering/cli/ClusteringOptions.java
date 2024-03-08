@@ -48,12 +48,12 @@ public class ClusteringOptions implements Runnable{
             if (userInput.inputSeq != null) {
                 userRequestHandler = new RequestHandler(this.method, this.userInput.inputSeq);
                 userRequestHandler.printInfo();
-                writeInOutput(userRequestHandler);
+                writeOutput(userRequestHandler);
             }
             else if (userInput.distanceMatrixPath != null) {
                 userRequestHandler = new RequestHandler(this.method, this.userInput.distanceMatrixPath);
                 userRequestHandler.printInfo();
-                writeInOutput(userRequestHandler);
+                writeOutput(userRequestHandler);
             }
         }
 
@@ -63,15 +63,13 @@ public class ClusteringOptions implements Runnable{
      *
      * @param userRequest the user request handler
      */
-    private void writeInOutput (RequestHandler userRequest) {
+    private void writeOutput (RequestHandler userRequest) {
         if (this.outputFilePath != null) {
             userRequest.writeTreeToNewick(this.outputFilePath);
         }
     }
     /**
      * Writes the result of clustering to an output file if specified.
-     *
-     * @param userRequest the user request handler
      */
     private boolean checkIfCorrectInput () {
         if (this.userInput.inputSeq == null && this.userInput.distanceMatrixPath == null) {

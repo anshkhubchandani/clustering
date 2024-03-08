@@ -60,7 +60,9 @@ public class TreeBuilder {
         if (treeType.equals(TreeType.UNROOTED)) {
             nextCluster = this.clusteringMethod.nextClusterCandidate();
 
-            connectLastPartsOfUnrootedTree(this.mapOfTrees.get(nextCluster.first), this.mapOfTrees.get(nextCluster.second),
+            String[] remainingTreeKeys = mapOfTrees.keySet().toArray(new String[0]);
+
+            connectLastPartsOfUnrootedTree(this.mapOfTrees.get(remainingTreeKeys[0]), this.mapOfTrees.get(remainingTreeKeys[1]),
                     this.clusteringMethod.distanceToFirst(nextCluster));
         }
 
@@ -108,7 +110,7 @@ public class TreeBuilder {
     }
 
     public boolean isFinishedBuilding () {
-        if (this.treeType.equals(TreeType.ROOTED) && (this.mapOfTrees.size() == 1)) {
+        if (this.mapOfTrees.size() == 1) {
             return true;
         }
         else if (this.treeType.equals(TreeType.UNROOTED) && (this.mapOfTrees.size() == 2)) {
