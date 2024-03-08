@@ -1,5 +1,5 @@
 package de.unijena.bioinf.dm23.clustering;
-
+/*
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AsciiSequence;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.Sequence;
 import de.unijena.bioinf.dm23.clustering.io.NewickWriter;
@@ -53,6 +53,7 @@ public class Main {
         System.out.println(lp3.getTaxon1() + " " + test.distanceToFirst(lp3) + " "
                 +  lp3.getTaxon2() + " " + test.distanceToSecond(lp3));
         */
+/*
 
         DistanceMatrix dm = new DistanceMatrix();
         dm.addDistance("Mensch", "Maus", 3);
@@ -130,5 +131,5 @@ public class Main {
         // Test writing the tree to a file
 
 
-    }
-    }
+    //}
+    //}

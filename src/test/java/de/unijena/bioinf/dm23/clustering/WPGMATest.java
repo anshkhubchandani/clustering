@@ -156,9 +156,6 @@ public class WPGMATest {
         System.out.println("Actual Distance between A-B: " + DistanceClusterAB);
         assertEquals(expectedDistanceClusterAB,DistanceClusterAB,0.001);
 
-
-
-
     }
 
 }

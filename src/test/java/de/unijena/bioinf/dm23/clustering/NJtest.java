@@ -1,9 +1,8 @@
 package de.unijena.bioinf.dm23.clustering;
 
-import de.unijena.bioinf.dm23.clustering.algo.DistanceMatrix;
-import de.unijena.bioinf.dm23.clustering.algo.InvalidDistanceException;
-import de.unijena.bioinf.dm23.clustering.algo.LabelPair;
-import de.unijena.bioinf.dm23.clustering.algo.NeighbourJoining;
+import de.unijena.bioinf.dm23.clustering.algo.*;
+import de.unijena.bioinf.dm23.grp06.alignments.algo.NeedlemanWunsch;
+import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -31,8 +30,7 @@ public class NJtest {
         System.out.println("Initial Distance Matrix:");
         System.out.println(dm);
 
-        NeighbourJoining upgma = new NeighbourJoining(dm);
-        //upgma.calculateNewDistances("Mensch", "Maus", "Cluster1");
+        NeighbourJoining nj = new NeighbourJoining(dm);
 
         System.out.println("\nNew Distance Matrix after merging 'Mensch' and 'Maus':");
         System.out.println(dm);
@@ -41,8 +39,8 @@ public class NJtest {
         double expectedDistanceMR = 12;
         double expectedDistanceRT = 10;
 
-        LabelPair newCluster = upgma.nextClusterCandidate();
-        upgma.updateDistanceMatrix(newCluster, "Me-Ma");
+        LabelPair newCluster = nj.nextClusterCandidate();
+        nj.updateDistanceMatrix(newCluster, "Me-Ma");
         // Check the distances
         double distanceMeMaR = dm.getDistance("Me-Ma", "Rose"); //Distance btw Mensch and Rose
         double distanceMeMaT = dm.getDistance("Me-Ma", "Tulpe"); //Distance btw Rose and Tulpe
@@ -100,5 +98,41 @@ public class NJtest {
             dm.addToNodeList("B");
             dm.addToNodeList("C");
         });
+    }
+
+    @Test
+    public void testRandomDNASequences() throws InvalidDistanceException {
+        int sequenceLength = 5; // Beispiel: Länge der zufällig generierten DNA-Sequenz
+        String randomSequenceA = RandomDNASequencesGenerator.generateRandomDNASequence(sequenceLength);
+        String randomSequenceB = RandomDNASequencesGenerator.generateRandomDNASequence(sequenceLength);
+
+        NeedlemanWunsch nw = new NeedlemanWunsch(new AminoacidSequence(randomSequenceA, "randomA"), new AminoacidSequence(randomSequenceB, "randomB"), new de.unijena.bioinf.dm23.grp06.algo.ClusteringScorer());
+        int score = nw.linearScore();
+        System.out.println("NW: " + score);
+
+        DistanceMatrix dm2 = new DistanceMatrix();
+        dm2.addDistance("SequenceA", "SequenceB",score);
+        dm2.addToNodeList("SequenceA");
+        dm2.addToNodeList("SequenceB");
+
+        NeighbourJoining njNeu = new NeighbourJoining(dm2);
+
+        System.out.println("Initial Distance Matrix:");
+        System.out.println(dm2);
+
+        LabelPair newCluster = njNeu.nextClusterCandidate();
+
+        double distanceToA = njNeu.distanceToFirst(newCluster);
+        double distanceToB = njNeu.distanceToSecond(newCluster);
+
+        double DistanceClusterAB = distanceToA;
+
+        double expectedDistanceClusterAB = score;
+
+
+        System.out.println("\nExpected Distance between A-B: " + expectedDistanceClusterAB);
+        System.out.println("Actual Distance between A-B: " + DistanceClusterAB);
+        assertEquals(expectedDistanceClusterAB,DistanceClusterAB,0.001);
+
     }
 }
