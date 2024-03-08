@@ -90,10 +90,9 @@ public class DistanceMatrix {
     }
 
     /**
-     * Deletes distances involving the specified taxa from the distance matrix.
+     * Deletes a specified label from the nodelist of this distance matrix.
      *
-     * @param taxon1 the first taxon
-     * @param taxon2 the second taxon
+     * @param nodeLabel the label to be deleted from the node list
      */
     private void deleteFromNodeList (String nodeLabel) {
         this.nodesInMatrix.remove(nodeLabel);

@@ -4,8 +4,8 @@ import de.unijena.bioinf.dm23.clustering.algo.DistanceMatrix;
 import de.unijena.bioinf.dm23.clustering.algo.InvalidDistanceException;
 import de.unijena.bioinf.dm23.clustering.algo.LabelPair;
 import de.unijena.bioinf.dm23.clustering.algo.WPGMA;
+import de.unijena.bioinf.dm23.grp06.algo.ClusteringScorer;
 import de.unijena.bioinf.dm23.grp06.alignments.algo.NeedlemanWunsch;
-import de.unijena.bioinf.dm23.grp06.alignments.algo.Scorer;
 import de.unijena.bioinf.dm23.grp06.exactsearch.model.AminoacidSequence;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -127,23 +127,25 @@ public class WPGMATest {
         String randomSequenceA = RandomDNASequencesGenerator.generateRandomDNASequence(sequenceLength);
         String randomSequenceB = RandomDNASequencesGenerator.generateRandomDNASequence(sequenceLength);
 
-        NeedlemanWunsch nw = new NeedlemanWunsch(new AminoacidSequence(randomSequenceA, "randomA"), new AminoacidSequence(randomSequenceB, "randomB"), new Scorer());
+        NeedlemanWunsch nw = new NeedlemanWunsch(new AminoacidSequence(randomSequenceA, "randomA"), new AminoacidSequence(randomSequenceB, "randomB"), new ClusteringScorer());
         int score = nw.linearScore();
         System.out.println("NW: " + score);
 
-        DistanceMatrix dm = new DistanceMatrix();
-        dm.addDistance("SequenceA", "SequenceB",score);
-        dm.addToNodeList("SequenceA");
-        dm.addToNodeList("SequenceB");
+        DistanceMatrix dm2 = new DistanceMatrix();
+        dm2.addDistance("SequenceA", "SequenceB",score);
+        dm2.addToNodeList("SequenceA");
+        dm2.addToNodeList("SequenceB");
+
+        WPGMA wpgmaNeu = new WPGMA(dm2);
 
         System.out.println("Initial Distance Matrix:");
-        System.out.println(dm);
+        System.out.println(dm2);
         // wpgma.calculateNewDistances("SequenceA","SequenceB","ClusterAB");
 
-        LabelPair newCluster = wpgma.nextClusterCandidate();
+        LabelPair newCluster = wpgmaNeu.nextClusterCandidate();
 
-        double distanceToA = wpgma.distanceToFirst(newCluster);
-        double distanceToB = wpgma.distanceToSecond(newCluster);
+        double distanceToA = wpgmaNeu.distanceToFirst(newCluster);
+        double distanceToB = wpgmaNeu.distanceToSecond(newCluster);
 
         double DistanceClusterAB = distanceToB;
 
