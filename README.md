@@ -1,9 +1,9 @@
-# clustering – phylogenetic tree reconstruction (Java)
+# clustering: phylogenetic tree reconstruction (Java)
 
 Command-line tool that builds phylogenetic trees from sequences or a distance matrix using
 hierarchical clustering and neighbour joining, and exports them in **Newick** format.
 
-> University project (B.Sc. Bioinformatics, FSU Jena – *Data Mining and Sequence Analysis*, winter 2023/24, team of 3).
+> University project (B.Sc. Bioinformatics, FSU Jena, *Data Mining and Sequence Analysis*, winter 2023/24, team of 3).
 > Part of a three-step series: [exact-search](https://github.com/anshkhubchandani/exact-search) → [alignments](https://github.com/anshkhubchandani/alignments) → [clustering](https://github.com/anshkhubchandani/clustering), where each project builds on the previous one.
 
 ## Features
