@@ -40,4 +40,21 @@ bin/
 .vscode/
 
 ### Mac OS ###
-.DS_Store
+.DS_Store__pycache__/
+*.pyc
+.idea/
+*.aux
+*.log
+*.bbl
+*.blg
+*.bcf
+*.out
+*.toc
+*.run.xml
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+.gradle/
+*.class
+id_rsa*
+*.pem
